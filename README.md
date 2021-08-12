@@ -35,5 +35,6 @@ Name | Github Profile | Role
 -----|----------------|------
 Molly Revoltar | @MollyRevoltar | Scrum master
 Sheereen Sidiq Ali | @sheereen7 | Business analyst
+Lokesh Duvvuru | |Business analyst
 Benjamin Colless | @bcolless | Software Tester
 Hugo Bouderlique | @HugoBde | Sofware Developer
