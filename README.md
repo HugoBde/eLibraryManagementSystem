@@ -38,3 +38,4 @@ Sheereen Sidiq Ali | @SheereenSA | Business analyst
 Lokesh Duvvuru | |Business analyst
 Benjamin Colless | @bcolless | Software Tester
 Hugo Bouderlique | @HugoBde | Sofware Developer
+Srujan Kaukuntla | @srujankarthik | Software Developer
