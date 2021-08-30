@@ -33,7 +33,7 @@ Our team has been hired in order to develop an effective Library Management Syst
 ## Contributors
 Name | Github Profile | Role
 -----|----------------|------
-Molly Revoltar | @MollyRevoltar | Scrum master
+Molly Revoltar | @MollyRev | Scrum master
 Sheereen Sidiq Ali | @SheereenSA | Business analyst
 Lokesh Duvvuru | |Business analyst
 Benjamin Colless | @bcolless | Software Tester
