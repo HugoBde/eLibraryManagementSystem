@@ -40,10 +40,10 @@
                         </li>
                         <li class="nav-item">
                             <!-- <a href="#login" class="nav-link">Login</a> -->
-                            <button type="button" class="btn btn-outline-secondary"
-                            data-bs-toggle="modal" 
-                            data-bs-target="#login"
-                            >Login</button>
+                            <a href="./login.html">
+                            <button type="button" class="btn btn-outline-secondary">
+                                Login</button>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -88,39 +88,7 @@
         </footer>
 
         <!-- Modal for Login -->
-        <div class="modal fade" id="login" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
-             <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                 <h5 class="modal-title" id="loginLabel">LOG IN</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 </div>
-                <div class="modal-body">
-                    <p class="lead">Enter your details to log in</p>
-                    <form>      <!-- no action put in-->
-                        <div class="mb-3">
-                            <label for="email" class="col-from-label">
-                                Email
-                            </label>
-                            <input type="email" class="form-control" id="email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="col-from-label">
-                                Password
-                            </label>
-                            <input type="password" class="form-control" id="password">
-                        </div>
-                        <h5>Don't have an account?</h5>
-                        <p><a href="#" class="tooltip-test" title="Click here to register">Register here</a></p>
-                    </form>
-                 </div>
-             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Sign in</button>
-            </div>
-            </div>
-        </div>
-        </div>
+        <!-- REMOVED MODAL FOR LOGIN AS WE MOVED IT INTO A DIFFERENT FILE (LOGIN.HTML) -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 
