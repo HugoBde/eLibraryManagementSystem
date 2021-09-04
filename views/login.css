@@ -1,0 +1,36 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #0d6efd;
+}
+
+.row{
+    background: #161c2d;
+    border-radius: 10px;
+}
+
+img{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.login-btn{
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 20%;
+    background-color: white;
+    color: #161c2d;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.login-btn:hover{
+    background: #161c2d;
+    border: 1px solid;
+    color: white;
+}
