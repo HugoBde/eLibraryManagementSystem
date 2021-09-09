@@ -8,8 +8,7 @@ const path = require("path")
 // so that we keep this place clean
 const routes = require("./routes/routes")
 
-const PORT = process.env.PORT || 3000
-
+const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwise
 
 // Initialising Express app
 const app = express()
@@ -25,7 +24,6 @@ app.use(session({
     } // sessions last one hour max
 }))
 
-
 // Add parsers
 // JSON parser might not be necessary for the moment
 // URLencoded lets us read the content of the form when users login
@@ -36,8 +34,9 @@ app.use(express.json())
 // Allows proper linking of stylesheets to HTML files for example
 
 app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "views")))
 
-app.get("/", routes.getHome)
+//app.get("/", routes.getHome)
 
 app.get("/addBook", routes.getAddBook)
 

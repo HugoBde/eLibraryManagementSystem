@@ -1,7 +1,6 @@
 *{
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
 }
 
 body{
@@ -16,6 +15,10 @@ body{
 img{
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+}
+
+#logo {
+    border-radius: 0px;
 }
 
 .login-btn{
