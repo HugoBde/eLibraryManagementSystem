@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- Bootstrap ICONS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+    <!-- Local CSS File -->
+    <!-- <link rel="stylesheet" href="dashboard.css"> -->
+
+    <!-- Front End Script-->
+    <script src="frontJS/addBook.js" defer></script>
+    <title>Add A Book</title>
+</head>
+
+<body>
+    <form id="bookForm" class="p-3">
+        <div class="mb-3">
+            <label for="title" class="form-label">Book title</label>
+            <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" class="form-control" id="author" name="author">
+        </div>
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN</label>
+            <input type="text" class="form-control" id="isbn" name="isbn">
+        </div>
+        <div class="mb-3">
+            <label for="isbn13" class="form-label">ISBN13</label>
+            <input type="text" class="form-control" id="isbn13" name="isbn13">
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="text" class="form-control" id="date" name="date">
+        </div>
+        <div class="mb-3">
+            <label for="publisher" class="form-label">Publisher</label>
+            <input type="text" class="form-control" id="publisher" name="publisher">
+        </div>
+        <div class="mb-3">
+            <label for="language" class="form-label">Language</label>
+            <input type="text" class="form-control" id="language" name="language">
+        </div>
+        <div class="mb-3">
+            <label for="edition" class="form-label">Edition</label>
+            <input type="text" class="form-control" id="ediiton" name="edition">
+        </div>
+        <div class="mb-3">
+            <label for="pages" class="form-label">Pages</label>
+            <input type="text" class="form-control" id="pages" name="pages">
+        </div>
+        <div class="mb-3">
+            <label for="imgURL" class="form-label">Image URL</label>
+            <input type="text" class="form-control" id="imgURL" name="imgURL">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+        <div id="goodToast" class="toast border border-success align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Book added to DB
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+        <div id="badToast" class="toast border border-danger align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div id="error" class="toast-body">
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

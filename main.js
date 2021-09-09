@@ -39,4 +39,8 @@ app.use(express.static(path.join(__dirname, "public")))
 
 app.get("/", routes.getHome)
 
+app.get("/addBook", routes.getAddBook)
+
+app.post("/addBook", routes.postAddBook)
+
 app.listen(PORT, () => console.log("Listening on port 3000"))
