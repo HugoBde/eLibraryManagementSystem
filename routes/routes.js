@@ -50,8 +50,40 @@ function dataTreat(object) {
     return object
 }
 
+
+async function getBook(req, res) {
+    let {isbn} = req.body
+    const client = new Client({database: "elms"})
+    await client.connect()
+    let query = `SELECT * FROM books WHERE isbn = '${isbn}';`
+    client.query(query)
+        .then( result => {
+            let {rowCount, rows} = result
+            if (rowCount === 0) {
+                res.status(404).end() // use the right status code
+            } else {
+                res.json(rows[0])
+            }
+        })
+        .catch( e => {
+            console.log(e)
+            res.status(500).end()
+        })
+}
+
+async function removeBook(req, res) {
+    let {isbn} = req.body
+    let query = `DELETE FROM books WHERE isbn='${isbn}';`
+    const client = new Client({database: "elms"})
+    await client.connect()
+    client.query(query)
+    .catch( e => console.log(e))
+    res.end()
+}
 module.exports = {
     getHome,
     getAddBook,
-    postAddBook
+    postAddBook,
+    getBook,
+    removeBook
 }

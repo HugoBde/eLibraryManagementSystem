@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- Bootstrap ICONS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../favicon/site.webmanifest">
+
+    <!-- Local CSS File -->
+    <link rel="stylesheet" href="../stylesheets/book.css">
+    <title>eLibrary</title>
+
+    <!-- Local JS Script -->
+    <script src="../frontJS/book.js" defer></script>
+</head>
+
+<body class="container-fluid">
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 sticky-top">
+        <div class="container">
+            <a href="/" class="navbar-brand"><img src="../favicon/favicon.ico"></a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item">
+                        <a href="/"><button type="button" class="btn btn-outline-secondary">Library<i
+                                    class="bi bi-search ps-2"></i></button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/"><button type="button" class="btn btn-outline-secondary">Home<i
+                                    class="bi bi-house ps-2"></i></button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/"><button type="button" class="btn btn-outline-secondary">My Account<i
+                                    class="bi bi-person ps-2"></i></button></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="bg-primary d-flex justify-content-center" style="flex-direction: column;" >
+        <div id="book" class="card container shadow bg-dark text-secondary" >
+            <div id="cardHeader" class="card-header">
+                <h4 id="title"></h4>
+            </div>
+            <div id="cardBody" class="card-body d-flex">
+                <img id="bookCover" class="m-3">
+                <div>        
+                    <p id="authors">By </p>
+                    <p id="publisher"></p>
+                    <p id="date"></p>
+                    <p id="edition">Edition: </p>
+                    <p id="pages">Pages: </p>
+                    <p id="isbn">ISBN10: </p>
+                    <p id="isbn13">ISBN13: </p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button id="removeButton" onclick="removeBook()" class="btn btn-outline-danger">Remove book</button>
+            </div>
+        </div>
+        <div id="error" hidden>
+            ass
+        </div>
+    </main> 
+</body>

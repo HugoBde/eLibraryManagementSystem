@@ -1,0 +1,45 @@
+html {
+    height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 0px !important;
+    height: 100%;
+}
+
+main {
+    height: 100%;
+}
+
+.card-header {
+    border-bottom-color: rgba(108, 117, 125, 0.5);
+}
+
+.card-footer {
+    border-top-color: rgba(108, 117, 125, 0.5);
+}
+
+#book {
+    width: 50%;
+}
+
+h4 {
+    margin: 0 !important;
+}
+
+p{
+    margin: 0 !important;
+    font-size: 1.5em;
+}
+
+#bookCover {
+    align-self: strech;
+    max-height: 40vh;
+}
+
+.shadow {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.5) !important;
+}
+  
