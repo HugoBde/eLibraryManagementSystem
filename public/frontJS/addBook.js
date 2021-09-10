@@ -25,11 +25,9 @@ form.addEventListener('submit', (event) => {
     
     let xhr = new XMLHttpRequest()
     xhr.onload = function() {
-        if (this.status === 200) {
-            console.log("UwU")
+        if (this.status === 201) {
             goodToast.show()
         } else {
-            console.log("OwO")
             errorMessage.innerHTML = "Could not add book to DB:<br>" + this.response
             badToast.show()
         }

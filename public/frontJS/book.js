@@ -11,6 +11,10 @@ const date = document.getElementById("date")
 const edition = document.getElementById("edition")
 const pages = document.getElementById("pages")
 
+const goodToast = new bootstrap.Toast(document.getElementById("goodToast"))
+const badToast = new bootstrap.Toast(document.getElementById("badToast"))
+const badToastErrorMessage = document.getElementById("removeError")
+
 let query = new URLSearchParams(document.location.search).get("isbn")
 let payload = {
     isbn: query
@@ -45,6 +49,14 @@ xhr.send(JSON.stringify(payload))
 
 function removeBook() {
     let xhr = new XMLHttpRequest()
+    xhr.onload = function() {
+        if (this.status === 201) {
+            goodToast.show()
+        } else {
+            badToastErrorMessage.innerHTML = this.response
+            badToast.show()
+        }
+    }
     xhr.open("POST", "/removeBook")
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.send(JSON.stringify(payload))

@@ -33,7 +33,7 @@ async function postAddBook(req, res) {
     client.query(query)
     .then( result => {
         console.log(`${title} added to the database`)
-        res.status(200)
+        res.status(201)
     })
     .catch( e => {
         console.log(e.message)
@@ -77,8 +77,19 @@ async function removeBook(req, res) {
     const client = new Client({database: "elms"})
     await client.connect()
     client.query(query)
-    .catch( e => console.log(e))
-    res.end()
+    .then( result => {
+        if (result.rowCount === 1) {
+            res.status(201).end()
+        } else {
+            res.status(500)  // look up the right satus code for that
+            res.send("This book might have already been removed")
+        }
+    })
+    .catch( e => {
+        console.log(e)
+        res.status(500)
+        res.send(e.message)
+    })
 }
 module.exports = {
     getHome,
