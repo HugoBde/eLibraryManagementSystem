@@ -34,7 +34,7 @@ app.use(express.json())
 // Allows proper linking of stylesheets to HTML files for example
 
 app.use(express.static(path.join(__dirname, "public")))
-app.use(express.static(path.join(__dirname, "views")))
+app.use(express.static(path.join(__dirname, "public/views")))
 
 //app.get("/", routes.getHome)
 
