@@ -6,7 +6,7 @@ function scriptValidation() {
     // the regex pattern fails as in the third quantifier {3,5} matches more than 5 letters
     // const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.([a-z]{3,5})+\.([a-z]{3})+\.[a-z]{2}$/
 
-    const regex = /^[a-zA-Z0-9\._-]+@((student)|(admin))+\.([a-z]{3})+\.([a-z]{3})+\.[a-z]{2}$/;
+    const regex = /^[a-zA-Z0-9\._-]+@((student)|(admin)|(staff))+\.([a-z]{3})+\.([a-z]{3})+\.[a-z]{2}$/;
 
     if (email.match(regex)) {
         form.classList.add("valid");
