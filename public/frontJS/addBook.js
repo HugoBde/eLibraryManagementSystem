@@ -27,6 +27,8 @@ form.addEventListener('submit', (event) => {
     xhr.onload = function() {
         if (this.status === 201) {
             goodToast.show()
+        } else if (this.status === 403) {
+            window.location = "/"
         } else {
             errorMessage.innerHTML = "Could not add book to DB:<br>" + this.response
             badToast.show()
