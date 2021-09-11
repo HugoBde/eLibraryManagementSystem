@@ -1,0 +1,43 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #0d6efd;
+}
+
+.row{
+    background: #161c2d;
+    border-radius: 10px;
+}
+
+.img{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    
+}
+
+/*
+
+Same as bootstrap classes btn btn-outline-light and <b></b>
+
+.register-btn{
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 20%;
+    background-color: white;
+    color: #161c2d;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.register-btn:hover{
+    background: #161c2d;
+    border: 1px solid;
+    color: white;
+}
+
+*/
