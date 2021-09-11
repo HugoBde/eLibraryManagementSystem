@@ -1,3 +1,6 @@
+// Load environment variables
+require("dotenv").config()
+
 const express = require("express")
 const session = require("express-session")
 
@@ -8,7 +11,7 @@ const path = require("path")
 // so that we keep this place clean
 const routes = require("./routes/routes")
 
-const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwise
+
 
 // Initialising Express app
 const app = express()
@@ -44,4 +47,11 @@ app.post("/addBook", routes.postAddBook)
 app.post("/getBook", routes.getBook)
 app.post("/removeBook", routes.removeBook)
 
-app.listen(PORT, () => console.log("Listening on port 3000"))
+
+const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwise
+
+// Initialising DB client
+
+routes.connectToDB()
+.then( () => app.listen(PORT, ()=> console.log("Listening on port " + PORT)))
+.catch(e => console.log(e))

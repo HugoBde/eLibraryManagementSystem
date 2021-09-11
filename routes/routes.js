@@ -1,16 +1,19 @@
-const { url } = require("inspector")
 const path = require("path")
 const {Client} = require("pg")
 
-function getHome(req,res) {
-    res.sendFile(path.resolve("views/index.html"))
+let client
+
+async function connectToDB() {
+    client = new Client({
+        connectionString: process.env.DB_URI,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    })
+    return client.connect()
 }
 
-function getAddBook(req, res) {
-    res.sendFile(path.resolve("views/addBook.html"))
-}
-
-async function postAddBook(req, res) {
+function postAddBook(req, res) {
     let {title, author, isbn, isbn13, date, publisher, language, edition, pages, imgURL} = dataTreat(req.body)
     
     // Ensure given URL is valid, if not, add no URL to DB
@@ -27,8 +30,6 @@ async function postAddBook(req, res) {
         pageInt = parse
     }
 
-    const client = new Client({database: "elms"})
-    await client.connect()
     let query = `INSERT INTO books VALUES ('${isbn}', '${isbn13}', '${title}', '${imgURL}', '${date}', '${publisher}', '{"${author}"}', '${language}', '${edition}', ${pageInt});`
     client.query(query)
     .then( result => {
@@ -51,10 +52,9 @@ function dataTreat(object) {
 }
 
 
-async function getBook(req, res) {
+function getBook(req, res) {
     let {isbn} = req.body
-    const client = new Client({database: "elms"})
-    await client.connect()
+
     let query = `SELECT * FROM books WHERE isbn = '${isbn}';`
     client.query(query)
         .then( result => {
@@ -71,11 +71,10 @@ async function getBook(req, res) {
         })
 }
 
-async function removeBook(req, res) {
+function removeBook(req, res) {
     let {isbn} = req.body
     let query = `DELETE FROM books WHERE isbn='${isbn}';`
-    const client = new Client({database: "elms"})
-    await client.connect()
+
     client.query(query)
     .then( result => {
         if (result.rowCount === 1) {
@@ -92,8 +91,7 @@ async function removeBook(req, res) {
     })
 }
 module.exports = {
-    getHome,
-    getAddBook,
+    connectToDB,
     postAddBook,
     getBook,
     removeBook
