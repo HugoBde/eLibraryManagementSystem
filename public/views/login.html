@@ -16,6 +16,15 @@
     <!-- Local CSS -->
     <link rel="stylesheet" href="../stylesheets/login.css">
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+    <!-- Linking login JS -->
+    <script src="../frontJS/login.js" defer></script>
+    <script src="../frontJS/loginRedirect.js"></script>
+
     <title>eLibrary</title>
   </head>
   <body>
@@ -29,21 +38,21 @@
                 <div class="col-lg-7 px-5 pt-5">
                     <img id="logo" src="../favicon/logo.svg">
                     <h5 style="color: whitesmoke;" class="my-3">Sign in to your account</h5>
-                    <form id="form" action="#"> <!-- action take it to the dashboard page if successful after submitting-->
+                    <form id="form" action="/login" method="post"> <!-- action take it to the dashboard page if successful after submitting-->
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <input type="text" id="email" placeholder="University Email Address" onkeydown="scriptValidation()" class="form-control my-3 p-2">
+                                <input name="email" type="text" id="email" placeholder="University Email Address" onkeydown="scriptValidation()" class="form-control my-3 p-2">
                                 <span id="text"></span>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <input type="password" placeholder="Password" class="form-control my-3 p-2">
+                                <input name="password" type="password" placeholder="Password" class="form-control my-3 p-2">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <button type="button" class="login-btn">Sign in</button>
+                                <button type="submit" class="login-btn">Sign in</button>
                             </div>
                         </div>
                         <p style="color: white;" class="my-3">Don't have an account?  <a href="#" style="color: red;"> Register here</a> </p>
@@ -51,10 +60,21 @@
                 </div>
             </div>
         </div>
+        <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+            <div id="badToast" class="toast border border-3 border-danger align-items-center shadow" role="alert" aria-live="assertive"
+                aria-atomic="true">
+                <div class="d-flex">
+                    <div id="error" class="toast-body text-danger">
+                        Incorrect email or password
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Linking login JS -->
-    <script src="../frontJS/login.js"></script>
+
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>

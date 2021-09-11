@@ -16,6 +16,9 @@
 
     <!-- Local CSS File -->
     <link rel="stylesheet" href="../stylesheets/style.css">
+    <!-- Local JS -->
+    <script src="../frontJS/index.js" defer ></script>
+
     <title>eLibrary</title>
   </head>
   <body>
@@ -44,7 +47,13 @@
                         <li class="nav-item">
                             <a href="#contact" class="nav-link">Contact</a>
                         </li>
-                        <li class="nav-item">
+                        <li hidden id="dashboardBtn" class="nav-item">
+                            <a class="nav-link" href="/dashboard.html">Dashboard</a>
+                        </li>
+                        <li hidden id="logoutBtn" class="nav-item">
+                            <button type="button" onclick = "logout()" class="btn btn-outline-danger">Logout</button>
+                        </li>
+                        <li hidden id="loginBtn" class="nav-item">
                             <!-- <a href="#login" class="nav-link">Login</a> -->
                             <a href="login.html">
                             <button type="button" class="btn btn-outline-secondary">

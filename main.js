@@ -42,16 +42,19 @@ app.use(express.static(path.join(__dirname, "public/views")))
 //app.get("/", routes.getHome)
 
 //app.get("/addBook", routes.getAddBook)
+app.get("/isUserLoggedIn", routes.isUserLoggedIn)
+app.get("/logout", routes.logout)
 
 app.post("/addBook", routes.postAddBook)
 app.post("/getBook", routes.getBook)
 app.post("/removeBook", routes.removeBook)
+app.post("/login", routes.postLogin)
 
 
 const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwise
 
 // Initialising DB client
-
+console.log("Connecting to " + process.env.DB_URI) // changed it to the connection string because it looks cooler hehe
 routes.connectToDB()
-.then( () => app.listen(PORT, ()=> console.log("Listening on port " + PORT)))
+.then( () => app.listen(PORT, ()=> console.log("Done\nListening on port " + PORT)))
 .catch(e => console.log(e))

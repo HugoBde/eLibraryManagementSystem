@@ -1,7 +1,17 @@
 const path = require("path")
 const {Client} = require("pg")
+const bcrypt = require("bcrypt")
+
+function User(id, firstName, lastName, email, isAdmin) {
+    this.id = id,
+    this.firstName = firstName,
+    this.lastName = lastName,
+    this.email = email,
+    this.isAdmin = isAdmin
+}
 
 let client
+
 
 async function connectToDB() {
     client = new Client({
@@ -11,6 +21,47 @@ async function connectToDB() {
         }
     })
     return client.connect()
+}
+
+function logout(req, res) {
+    req.session.destroy()
+    res.end()
+}
+
+function isUserLoggedIn(req, res) {
+    if (req.session.user) {
+        res.status(200).end()
+    } else {
+        res.status(400).end() // find right error code for that
+    }
+}
+
+function postLogin(req, res) {
+    let {email, password} = req.body
+    let query = `SELECT * FROM users WHERE email = '${email}';`
+    client.query(query)
+        .then( results => {
+            let {rowCount, rows} = results
+            if (rowCount !== 1) {
+                console.log("Email not found in DB")
+                res.status(400).end()                   // look up the right error code
+            } else {
+                let {id, firstname, lastname, hash, isadmin} = rows[0]
+                if (bcrypt.compareSync(password, hash)) {
+                    let user = new User(id, firstname, lastname, email, isadmin)
+                    console.log("Log in: " + id)
+                    req.session.user = user
+                    res.redirect("/dashboard.html")
+                } else {
+                    console.log("User entered the wrong password!")
+                    res.status(400).end()               // look up the right error code
+                }
+            }
+        })
+        .catch(e => {
+            console.log(e)
+            res.status(500).end()
+        })
 }
 
 function postAddBook(req, res) {
@@ -92,6 +143,9 @@ function removeBook(req, res) {
 }
 module.exports = {
     connectToDB,
+    logout,
+    isUserLoggedIn,
+    postLogin,
     postAddBook,
     getBook,
     removeBook

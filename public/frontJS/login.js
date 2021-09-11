@@ -1,5 +1,6 @@
+const form = document.getElementById("form")
+
 function scriptValidation() {
-    let form = document.getElementById('form');
     let email = document.getElementById('email').value;
     let text = document.getElementById('text');
 
@@ -28,3 +29,28 @@ function scriptValidation() {
 }
 
 setInterval(scriptValidation, 100);
+
+const badToast = new bootstrap.Toast(document.getElementById("badToast"))
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // grab data from the form
+    let fd = new FormData(form)
+    let payload = {}
+    for (let p of fd) {
+        payload[p[0]] = p[1]
+    }
+
+    
+    let xhr = new XMLHttpRequest()
+    xhr.onload = function() {
+        if (this.status === 400) {
+            badToast.show()
+        } else {
+            window.location = "/dashboard.html"
+        }
+    }
+    xhr.open("POST", "/login")
+    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.send(JSON.stringify(payload))
+})
