@@ -12,7 +12,7 @@ Our team has been hired in order to develop an effective Library Management Syst
 - [x] Homepage
 - [x] Account information / Dashboard
 - [x] Registration
-- [x] Catalogue
+- [x] Catalogue - Add/Remove Book
 
 ### Sprint 2
 
