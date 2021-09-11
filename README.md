@@ -8,11 +8,11 @@ Our team has been hired in order to develop an effective Library Management Syst
 
 ### Sprint 1 
 
-- [ ] Login
-- [ ] Homepage
-- [ ] Account information / Dashboard
-- [ ] Registration
-- [ ] Catalogue
+- [x] Login
+- [x] Homepage
+- [x] Account information / Dashboard
+- [x] Registration
+- [x] Catalogue
 
 ### Sprint 2
 
@@ -35,7 +35,7 @@ Name | Github Profile | Role
 -----|----------------|------
 Molly Revoltar | @MollyRev | Scrum master
 Sheereen Sidiq Ali | @SheereenSA | Business analyst
-Lokesh Duvvuru | |Business analyst
+Lokesh Duvvuru | @duvvurulokesh |Business analyst
 Benjamin Colless | @bcolless | Software Tester
 Hugo Bouderlique | @HugoBde | Sofware Developer
 Srujan Kaukuntla | @srujankarthik | Software Developer/Tester
