@@ -26,6 +26,7 @@
     <link rel="manifest" href="../favicon/site.webmanifest">
 
     <script src="/frontJS/dashboard.js"></script>
+    <script src="/frontJS/logout.js"></script>
 
     <!-- Local CSS File -->
     <link rel="stylesheet" href="../stylesheets/dashboard.css">
@@ -56,6 +57,9 @@
                     <li class="nav-item">
                         <a href="#"><button type="button" class="btn btn-outline-secondary">My Account<i
                                     class="bi bi-person ps-2"></i></button></a>
+                    </li>
+                    <li id="logoutBtn" class="nav-item">
+                        <button type="button" onclick = "logout()" class="btn btn-outline-danger">Logout</button>
                     </li>
                 </ul>
             </div>

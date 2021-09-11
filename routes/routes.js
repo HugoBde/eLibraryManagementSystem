@@ -141,6 +141,30 @@ function removeBook(req, res) {
         res.send(e.message)
     })
 }
+
+function postRegister(req, res) {
+    let {id, firstName, lastName, email, password, userType} = req.body
+    let isAdmin = (userType === "staff")
+    let idInt = Number.parseInt(id)
+    if (Number.isNaN(idInt)) {
+        res.status(400).send("ID is not a number")
+    }
+    let hash = bcrypt.hashSync(password, 10)
+    let query = `INSERT INTO users VALUES (${id}, '${email}', '${firstName}', '${lastName}', '${hash}', ${isAdmin});`
+    client.query(query)
+        .then(results => {
+            res.status(200).end()
+        })
+        .catch(e => {
+            console.log("Registration: " + e.message)
+            if (e.code === '23505') {
+                res.status(500).send("User ID already in use")
+            } else {
+                res.status(500).send("Unknown error")
+            }
+        })
+}
+
 module.exports = {
     connectToDB,
     logout,
@@ -148,5 +172,6 @@ module.exports = {
     postLogin,
     postAddBook,
     getBook,
-    removeBook
+    removeBook,
+    postRegister
 }
