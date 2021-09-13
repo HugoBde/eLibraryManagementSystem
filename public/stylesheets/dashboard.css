@@ -19,6 +19,10 @@
     padding: 1em;
 }
 
+.bookListItem a img {
+    max-height: 160px;
+}
+
 html, body {
     height: 100%;
 }
