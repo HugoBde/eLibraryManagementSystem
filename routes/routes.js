@@ -185,6 +185,17 @@ function postRegister(req, res) {
         })
 }
 
+function getBorrowedBooks(req, res) {
+    if (req.session.user) {
+        let query = `SELECT * FROM books WHERE isbn IN (SELECT book_isbn FROM borrowals WHERE user_id = ${req.session.user.id});`
+        client.query(query)
+        .then( results => {
+            res.json({books: results.rows})
+        })
+        .catch( e => console.log(e.message))
+    }
+}
+
 module.exports = {
     connectToDB,
     logout,
@@ -194,5 +205,6 @@ module.exports = {
     postAddBook,
     getBook,
     removeBook,
-    postRegister
+    postRegister,
+    getBorrowedBooks
 }
