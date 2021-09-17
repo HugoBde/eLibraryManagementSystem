@@ -1,6 +1,8 @@
 const book = document.getElementById("book")
 const error = document.getElementById("error")
 
+const removeBookBtn = document.getElementById("removeBookBtn")
+
 const title = document.getElementById("title")
 const authors = document.getElementById("authors")
 const bookCover = document.getElementById("bookCover")
@@ -16,25 +18,25 @@ const badToast = new bootstrap.Toast(document.getElementById("badToast"))
 const badToastErrorMessage = document.getElementById("removeError")
 
 let query = new URLSearchParams(document.location.search).get("isbn")
-let payload = {
-    isbn: query
-}
 
 let xhr = new XMLHttpRequest()
 xhr.onload = function () {
     if (this.status === 200) {
         let res = JSON.parse(this.response)
-        bookCover.src = res.image
-        title.innerHTML += res.title
-        isbn.innerHTML += res.isbn
-        isbn13.innerHTML += res.isbn13
-        publisher.innerHTML += res.publisher
-        edition.innerHTML += res.edition
-        pages.innerHTML += res.pages
-        date.innerHTML += res.date
+        bookCover.src = res.book.image
+        title.innerHTML += res.book.title
+        isbn.innerHTML += res.book.isbn
+        isbn13.innerHTML += res.book.isbn13
+        publisher.innerHTML += res.book.publisher
+        edition.innerHTML += res.book.edition
+        pages.innerHTML += res.book.pages
+        date.innerHTML += res.book.date
 
-        for (let author of res.authors) {
+        for (let author of res.book.authors) {
             authors.innerHTML += author
+        }
+        if (res.isAdmin) {
+            removeBookBtn.hidden = false
         }
     } else {
         book.hidden = true
@@ -42,9 +44,8 @@ xhr.onload = function () {
         // rework this
     }
 }
-xhr.open("POST", "/getBook")
-xhr.setRequestHeader("Content-Type", "application/json")
-xhr.send(JSON.stringify(payload))
+xhr.open("GET", "/getBook/" + query)
+xhr.send()
 
 
 function removeBook() {
@@ -59,5 +60,5 @@ function removeBook() {
     }
     xhr.open("POST", "/removeBook")
     xhr.setRequestHeader("Content-Type", "application/json")
-    xhr.send(JSON.stringify(payload))
+    xhr.send(JSON.stringify({isbn: query}))
 }

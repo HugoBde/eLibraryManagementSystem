@@ -36,6 +36,15 @@ function isUserLoggedIn(req, res) {
     }
 }
 
+function isUserAdmin(req, res) {
+    if (req.session.user) {
+        if (req.session.user.isAdmin) {
+            res.status(200).end()
+        }
+    }
+    res.status(403).end()
+}
+
 function postLogin(req, res) {
     let {email, password} = req.body
     let query = `SELECT * FROM users WHERE email = '${email}';`
@@ -65,6 +74,10 @@ function postLogin(req, res) {
 }
 
 function postAddBook(req, res) {
+    if (!req.session.user || !req.session.user.isAdmin) {
+        res.status(403).end()
+        return
+    }
     let {title, author, isbn, isbn13, date, publisher, language, edition, pages, imgURL} = dataTreat(req.body)
     
     // Ensure given URL is valid, if not, add no URL to DB
@@ -104,8 +117,11 @@ function dataTreat(object) {
 
 
 function getBook(req, res) {
-    let {isbn} = req.body
-
+    let {isbn} = req.params
+    let isAdmin = false
+    if (req.session.user && req.session.user.isAdmin) {
+        isAdmin = true
+    }
     let query = `SELECT * FROM books WHERE isbn = '${isbn}';`
     client.query(query)
         .then( result => {
@@ -113,7 +129,7 @@ function getBook(req, res) {
             if (rowCount === 0) {
                 res.status(404).end() // use the right status code
             } else {
-                res.json(rows[0])
+                res.json({book: rows[0], isAdmin: isAdmin})
             }
         })
         .catch( e => {
@@ -123,6 +139,10 @@ function getBook(req, res) {
 }
 
 function removeBook(req, res) {
+    if (!req.session.user || !req.session.user.isAdmin) {
+        res.status(403).send("You sneaky little hacker")
+        return
+    }
     let {isbn} = req.body
     let query = `DELETE FROM books WHERE isbn='${isbn}';`
 
@@ -141,12 +161,50 @@ function removeBook(req, res) {
         res.send(e.message)
     })
 }
+
+function postRegister(req, res) {
+    let {id, firstName, lastName, email, password, userType} = req.body
+    let isAdmin = (userType === "staff")
+    let idInt = Number.parseInt(id)
+    if (Number.isNaN(idInt)) {
+        res.status(400).send("ID is not a number")
+    }
+    let hash = bcrypt.hashSync(password, 10)
+    let query = `INSERT INTO users VALUES (${id}, '${email}', '${firstName}', '${lastName}', '${hash}', ${isAdmin});`
+    client.query(query)
+        .then(results => {
+            res.status(200).end()
+        })
+        .catch(e => {
+            console.log("Registration: " + e.message)
+            if (e.code === '23505') {
+                res.status(500).send("User ID already in use")
+            } else {
+                res.status(500).send("Unknown error")
+            }
+        })
+}
+
+function getBorrowedBooks(req, res) {
+    if (req.session.user) {
+        let query = `SELECT * FROM books WHERE isbn IN (SELECT book_isbn FROM borrowals WHERE user_id = ${req.session.user.id});`
+        client.query(query)
+        .then( results => {
+            res.json({books: results.rows})
+        })
+        .catch( e => console.log(e.message))
+    }
+}
+
 module.exports = {
     connectToDB,
     logout,
     isUserLoggedIn,
+    isUserAdmin,
     postLogin,
     postAddBook,
     getBook,
-    removeBook
+    removeBook,
+    postRegister,
+    getBorrowedBooks
 }

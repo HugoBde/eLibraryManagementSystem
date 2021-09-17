@@ -2,6 +2,27 @@
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.5) !important;
 }
 
+.card {
+    cursor: pointer;
+}
+
+#booksList {
+    text-align: start;
+}
+
+#return {
+    cursor: pointer;
+    font-size: 2em;
+}
+
+.bookListItem {
+    padding: 1em;
+}
+
+.bookListItem a img {
+    max-height: 160px;
+}
+
 html, body {
     height: 100%;
 }

@@ -8,15 +8,26 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+
+    <!-- Local CSS -->
     <link rel="stylesheet" href="../stylesheets/register.css">
 
+    <!-- Add favicons-->
+
+    <!-- Local JS -->
+    <script src="/frontJS/registerRedirect.js"></script>
+    <script src="/frontJS/register.js" defer></script>
     <title>eLibrary</title>
   </head>
   <body>
     
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
         <div class="container">
-            <a href="#" class="navbar-brand"> LOGO GOES HERE</a>
+            <a href="/" class="navbar-brand"><img src="../favicon/favicon.ico"></a>
 
             <button 
             class="navbar-toggler" 
@@ -47,13 +58,21 @@
             <div class="row g-0">
                 <div class="col-lg-10 px-5 pt-5">
                     <h1 class="px-5 text-white">Register a new account</h1>
-                    <form>
+                    <form id="form">
+                        <div class="form-group row px-5 my-2 p-2">
+                            <label for="inputID" class="col-sm-2 col-form-label text-white">ID:  
+                                <label class="text-danger">*</label>
+                            </label>
+                            <div class="col-sm-7">
+                              <input name="id" type="text" class="form-control" id="inputID" placeholder="ID">
+                            </div>
+                        </div>
                         <div class="form-group row px-5 my-2 p-2">
                             <label for="inputFirstName" class="col-sm-2 col-form-label text-white">First Name: 
                                 <label class="text-danger">*</label>
                             </label>
                             <div class="col-sm-7">
-                              <input type="firstname" class="form-control" id="inputFirstName" placeholder="First Name">
+                              <input name="firstName" type="text" class="form-control" id="inputFirstName" placeholder="First Name">
                             </div>
                         </div>
                         <div class="form-group row px-5 my-2 p-2">
@@ -61,7 +80,7 @@
                                 <label class="text-danger">*</label>
                             </label>
                             <div class="col-sm-7">
-                              <input type="lastname" class="form-control" id="input:LastName" placeholder="Last Name">
+                              <input name="lastName" type="text" class="form-control" id="inputLastName" placeholder="Last Name">
                             </div>
                         </div>
                         <div class="form-group row px-5 my-2 p-2">
@@ -69,7 +88,7 @@
                                 <label class="text-danger">*</label>
                             </label>
                             <div class="col-sm-7">
-                                <input type="email" class="form-control" placeholder="University Email Address">
+                                <input name="email" type="email" class="form-control" id="inputEmail" placeholder="University Email Address">
                             </div>
                         </div>
                         <div class="form-group row px-5 my-2 p-2">
@@ -77,26 +96,24 @@
                                 <label class="text-danger">*</label>
                             </label>
                             <div class="col-sm-7">
-                              <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                              <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
                             </div>
                         </div>
                         <div class="form-group row px-5 p-2">
                             <div class="col-md-5 mb-1 btn-group-toggle text-center" data-toggle="buttons">
                                 <label class="btn btn-outline-primary btn-lg" active>
-                                  <input type="radio" name="options" id="option1" autocomplete="off" checked> I am <br>a Student
+                                  <input type="radio" name="userType" id="option1" value="student" autocomplete="off" checked> I am <br>a Student
                                 </label>
                             </div>
                             <div class="col-md-4 mb-1 btn-group-toggle text-center" data-toggle="buttons">
                                 <label class="btn btn-outline-primary btn-lg">
-                                  <input type="radio" name="options" id="option2" autocomplete="off"> I am a <br>Staff
+                                  <input type="radio" name="userType" id="option2" value="staff" autocomplete="off"> I am a <br>Staff
                                 </label>
                             </div>
                         </div>
                         <div class="form-row px-5 p-2">
                             <div class="col-sm-10 text-center">
-                                <a href="./userDashboard.html">
-                                    <button type="button" class="btn btn-outline-light btn-md"><b>Register</b></button>
-                                </a>
+                                <button type="button" onclick="register()" class="btn btn-outline-light btn-md"><b>Register</b></button>
                             </div>
                         </div>
                         <div class="form-row">
@@ -144,6 +161,30 @@
             <p class="lead">Copyright &copy; 2021 Library Website</p>
         </div>
     </footer>
+
+    <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+        <div id="goodToast" class="toast border border-3 border-success align-items-center shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body text-success">
+                    User registered successfully <a href="/login.html">now login</a>
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+        <div id="badToast" class="toast border border-3 border-danger align-items-center shadow" role="alert" aria-live="assertive"
+            aria-atomic="true">
+            <div class="d-flex">
+                <div id="errorReason" class="toast-body text-danger">
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>

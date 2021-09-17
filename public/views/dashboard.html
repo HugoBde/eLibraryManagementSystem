@@ -26,7 +26,8 @@
     <link rel="manifest" href="../favicon/site.webmanifest">
 
     <script src="/frontJS/dashboard.js"></script>
-
+    <script src="/frontJS/logout.js"></script>
+    <script src="/frontJS/dashboardMenu.js" defer></script>
     <!-- Local CSS File -->
     <link rel="stylesheet" href="../stylesheets/dashboard.css">
     <title>eLibrary</title>
@@ -59,6 +60,9 @@
                         <a href="#"><button type="button" class="btn btn-outline-secondary">My Account<i
                                     class="bi bi-person ps-2"></i></button></a>
                     </li>
+                    <li id="logoutBtn" class="nav-item">
+                        <button type="button" onclick = "logout()" class="btn btn-outline-danger">Logout</button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -66,12 +70,11 @@
     <main style="display:table-row;" class="bg-primary text-center h-100">
         <div id="menu" class="align-content-center justify-content-center w-100 h-100 row row-cols-2 row-cols-md-3">
             <div class="col">
-                <div class="col card shadow border-secondary ">
+                <div class="col card shadow border-secondary" onclick="viewBooks()">
                     <div class="card-header"><i class="bi bi-book" style="font-size: 4em;"></i></div>
                     <div class="card-body ">
                         <h5 class="card-title">Borrowed books</h5>
-                        <a href="#" class="stretched-link"></a>
-                        <p href="/" class="card-text text-secondary text-truncate">Check out your books</p>
+                        <p class="card-text text-secondary text-truncate">Check out your books</p>
                     </div>
                 </div>
             </div>
@@ -98,7 +101,13 @@
                 </div>
             </div>
         </div>
-
+        <div id="books" hidden class="container shadow bg-white my-3">
+            <h2 id="noBooks">No currently rented books</h2>
+            <div hidden id="booksList" class="list-group">
+            </div>
+            <hr class="mb-0">
+            <i id="return" onclick="viewMenu()" class="bi bi-arrow-return-left"></i>
+        </div>
     </main>
     <!-- Footer -->
     <footer class="p-5 bg-dark text-white text-center">
