@@ -21,15 +21,29 @@ xhrBorrowedBooks.onload = function() {
         for (let book of this.response.books) {
             let item = document.createElement("div")
             item.className = "bookListItem"
+
             let bookTitle = document.createElement("h4")
+            bookTitle.innerHTML = book.title
+
             let bookLink = document.createElement("a")
+            bookLink.href = "/book.html?isbn=" + book.isbn
+
             let bookCover = document.createElement("img")
             bookCover.src = book.image
-            bookLink.href = "/book.html?isbn=" + book.isbn
+
+            let borrowDate = document.createElement("p")
+            let date = new Date(book.date_borrowing)
+            borrowDate.innerHTML = `Borrow date: ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+
+            let returnDate = document.createElement("p")
+            date = new Date(book.return_date)
+            returnDate.innerHTML = `Return date: ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+
             bookLink.appendChild(bookCover)
-            bookTitle.innerHTML = book.title
             item.appendChild(bookTitle)
             item.appendChild(bookLink)
+            item.appendChild(borrowDate)
+            item.appendChild(returnDate)
             booksList.appendChild(item)
         }
         noBooks.hidden = true

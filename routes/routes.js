@@ -185,10 +185,60 @@ function postRegister(req, res) {
         })
 }
 
+function borrowBook(req, res) {
+    if (!req.session.user) {
+        res.status(403).send("You are not allowed to borrow this book")
+        return
+    }
+    let {isbn} = req.body
+    let today = new Date()
+    let day = today.getDate()
+    let month = today.getMonth()
+    let year = today.getFullYear()
+    let todayStr = `${year}-${month + 1}-${day}`
+    month++
+    if (month === 12) {
+        month = 0
+        year++
+    }
+    let returnDateStr = `${year}-${month + 1}-${day}`
+    let checkQuery = `SELECT * FROM borrowals WHERE user_id=${req.session.user.id} AND book_isbn = '${isbn}';`
+    client.query(checkQuery)
+        .then(results => {
+            if (results.rowCount !== 0) {
+                res.status(403).send("You already have this book borrowed")
+                return
+            }
+        })
+        .catch(err => {
+            console.log(err.message)
+            res.status(510).send("Internal server error, please try again")
+        })
+    let borrowQuery = `INSERT INTO borrowals VALUES (${req.session.user.id}, '${isbn}', '${todayStr}', '${returnDateStr}');`
+    let updateQuery = `UPDATE books SET available_copies = (available_copies - 1) WHERE isbn = '${isbn}';`
+    client.query(borrowQuery)
+        .then(() => {
+            client.query(updateQuery)
+                .then(() => {
+                    res.status(201).send("Book borrowed")
+                })
+                .catch( err => {
+                    console.log(err.message)
+                    let cancelQuery = `DELETE FROM borrowals WHERE book_isbn = '${isbn}';`
+                    client.query(cancelQuery)
+                    res.status(500).send("An error occured while borrowing the book")
+                })
+        })
+        .catch(err => {
+            console.log(err.message)
+            res.status(500).send("An error occured while borrowing the book")
+        })
+}
+
 function getBorrowedBooks(req, res) {
     if (req.session.user) {
-        let query = `SELECT * FROM books WHERE isbn IN (SELECT book_isbn FROM borrowals WHERE user_id = ${req.session.user.id});`
-        client.query(query)
+        let bookDataQuery = `SELECT books.title, books.image, borrowals.date_borrowing, borrowals.return_date FROM books, borrowals WHERE books.isbn = borrowals.book_isbn AND borrowals.user_id = ${req.session.user.id};`
+        client.query(bookDataQuery)
         .then( results => {
             res.json({books: results.rows})
         })
@@ -206,5 +256,6 @@ module.exports = {
     getBook,
     removeBook,
     postRegister,
-    getBorrowedBooks
+    getBorrowedBooks,
+    borrowBook
 }

@@ -70,16 +70,18 @@
                 <img id="bookCover" class="m-3">
                 <div>        
                     <p id="authors">By </p>
-                    <p id="publisher"></p>
-                    <p id="date"></p>
+                    <p id="publisher">Publisher: </p>
+                    <p id="date">Date of publication: </p>
                     <p id="edition">Edition: </p>
                     <p id="pages">Pages: </p>
                     <p id="isbn">ISBN10: </p>
                     <p id="isbn13">ISBN13: </p>
+                    <p id="availableCopies">Available Copies: </p>
                 </div>
             </div>
-            <div hidden id = "removeBookBtn" class="card-footer">
-                <button id="removeButton" onclick="removeBook()" class="btn btn-outline-danger">Remove book</button>
+            <div class="card-footer">
+                <button id="removeBookBtn" onclick="removeBook()" class="btn btn-outline-danger" hidden >Remove book</button>
+                <button id="borrowBookBtn" onclick="borrow()" class="btn btn-outline-success">Borrow</button>
             </div>
         </div>
         <div id="error" hidden class="card shadow bg-dark text-secondary">
@@ -89,9 +91,7 @@
             <div id="goodToast" class="toast border border-3 border-success align-items-center shadow" role="alert"
                 aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
-                    <div class="toast-body text-success">
-                        Book removed successfully
-                    </div>
+                    <div id="goodToastMessage" class="toast-body text-success"></div>
                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
                         aria-label="Close"></button>
                 </div>
@@ -101,7 +101,7 @@
             <div id="badToast" class="toast border border-3 border-danger align-items-center shadow" role="alert" aria-live="assertive"
                 aria-atomic="true">
                 <div class="d-flex">
-                    <div id="removeError" class="toast-body text-danger">
+                    <div id="badToastMessage" class="toast-body text-danger">
                     </div>
                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
                         aria-label="Close"></button>
