@@ -30,7 +30,7 @@ app.use(session({
 // Add parsers
 // JSON parser might not be necessary for the moment
 // URLencoded lets us read the content of the form when users login
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // Serve static files
@@ -53,6 +53,7 @@ app.post("/removeBook", routes.removeBook)
 app.post("/login", routes.postLogin)
 app.post("/register", routes.postRegister)
 app.post("/borrowBook", routes.borrowBook)
+app.post("/returnBook", routes.returnBook)
 
 
 const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwise
@@ -60,5 +61,5 @@ const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwis
 // Initialising DB client
 console.log("Connecting to " + process.env.DB_URI) // changed it to the connection string because it looks cooler hehe
 routes.connectToDB()
-.then( () => app.listen(PORT, ()=> console.log("Done\nListening on port " + PORT)))
-.catch(e => console.log(e))
+    .then(() => app.listen(PORT, () => console.log("Done\nListening on port " + PORT)))
+    .catch(e => console.log(e))

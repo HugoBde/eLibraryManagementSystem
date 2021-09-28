@@ -1,13 +1,13 @@
 const path = require("path")
-const {Client} = require("pg")
+const { Client } = require("pg")
 const bcrypt = require("bcrypt")
 
 function User(id, firstName, lastName, email, isAdmin) {
     this.id = id,
-    this.firstName = firstName,
-    this.lastName = lastName,
-    this.email = email,
-    this.isAdmin = isAdmin
+        this.firstName = firstName,
+        this.lastName = lastName,
+        this.email = email,
+        this.isAdmin = isAdmin
 }
 
 let client
@@ -46,16 +46,16 @@ function isUserAdmin(req, res) {
 }
 
 function postLogin(req, res) {
-    let {email, password} = req.body
+    let { email, password } = req.body
     let query = `SELECT * FROM users WHERE email = '${email}';`
     client.query(query)
-        .then( results => {
-            let {rowCount, rows} = results
+        .then(results => {
+            let { rowCount, rows } = results
             if (rowCount !== 1) {
                 console.log("Email not found in DB")
                 res.status(400).end()                   // look up the right error code
             } else {
-                let {id, firstname, lastname, hash, isadmin} = rows[0]
+                let { id, firstname, lastname, hash, isadmin } = rows[0]
                 if (bcrypt.compareSync(password, hash)) {
                     let user = new User(id, firstname, lastname, email, isadmin)
                     console.log("Log in: " + id)
@@ -78,8 +78,8 @@ function postAddBook(req, res) {
         res.status(403).end()
         return
     }
-    let {title, author, isbn, isbn13, date, publisher, language, edition, pages, imgURL} = dataTreat(req.body)
-    
+    let { title, author, isbn, isbn13, date, publisher, language, edition, pages, imgURL } = dataTreat(req.body)
+
     // Ensure given URL is valid, if not, add no URL to DB
     let urlRegex = /^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/
     if (!urlRegex.test(imgURL)) {
@@ -96,43 +96,43 @@ function postAddBook(req, res) {
 
     let query = `INSERT INTO books VALUES ('${isbn}', '${isbn13}', '${title}', '${imgURL}', '${date}', '${publisher}', '{"${author}"}', '${language}', '${edition}', ${pageInt});`
     client.query(query)
-    .then( result => {
-        console.log(`${title} added to the database`)
-        res.status(201)
-    })
-    .catch( e => {
-        console.log(e.message)
-        res.status(422).send(e.message)
-    })
-    .finally(() => res.end())
+        .then(result => {
+            console.log(`${title} added to the database`)
+            res.status(201)
+        })
+        .catch(e => {
+            console.log(e.message)
+            res.status(422).send(e.message)
+        })
+        .finally(() => res.end())
 }
 
 // Might move this function elsewhere later since it isnt a route itself but a helper function to treat SQL queries content
 function dataTreat(object) {
     for (let [key, value] of Object.entries(object)) {
-        object[key] = value.replace(/'/g,"''")
+        object[key] = value.replace(/'/g, "''")
     }
     return object
 }
 
 
 function getBook(req, res) {
-    let {isbn} = req.params
+    let { isbn } = req.params
     let isAdmin = false
     if (req.session.user && req.session.user.isAdmin) {
         isAdmin = true
     }
     let query = `SELECT * FROM books WHERE isbn = '${isbn}';`
     client.query(query)
-        .then( result => {
-            let {rowCount, rows} = result
+        .then(result => {
+            let { rowCount, rows } = result
             if (rowCount === 0) {
                 res.status(404).end() // use the right status code
             } else {
-                res.json({book: rows[0], isAdmin: isAdmin})
+                res.json({ book: rows[0], isAdmin: isAdmin })
             }
         })
-        .catch( e => {
+        .catch(e => {
             console.log(e)
             res.status(500).end()
         })
@@ -143,27 +143,27 @@ function removeBook(req, res) {
         res.status(403).send("You sneaky little hacker")
         return
     }
-    let {isbn} = req.body
+    let { isbn } = req.body
     let query = `DELETE FROM books WHERE isbn='${isbn}';`
 
     client.query(query)
-    .then( result => {
-        if (result.rowCount === 1) {
-            res.status(201).end()
-        } else {
-            res.status(500)  // look up the right satus code for that
-            res.send("This book might have already been removed")
-        }
-    })
-    .catch( e => {
-        console.log(e)
-        res.status(500)
-        res.send(e.message)
-    })
+        .then(result => {
+            if (result.rowCount === 1) {
+                res.status(201).end()
+            } else {
+                res.status(500)  // look up the right satus code for that
+                res.send("This book might have already been removed")
+            }
+        })
+        .catch(e => {
+            console.log(e)
+            res.status(500)
+            res.send(e.message)
+        })
 }
 
 function postRegister(req, res) {
-    let {id, firstName, lastName, email, password, userType} = req.body
+    let { id, firstName, lastName, email, password, userType } = req.body
     let isAdmin = (userType === "staff")
     let idInt = Number.parseInt(id)
     if (Number.isNaN(idInt)) {
@@ -190,7 +190,7 @@ function borrowBook(req, res) {
         res.status(403).send("You are not allowed to borrow this book")
         return
     }
-    let {isbn} = req.body
+    let { isbn } = req.body
     let today = new Date()
     let day = today.getDate()
     let month = today.getMonth()
@@ -222,7 +222,7 @@ function borrowBook(req, res) {
                 .then(() => {
                     res.status(201).send("Book borrowed")
                 })
-                .catch( err => {
+                .catch(err => {
                     console.log(err.message)
                     let cancelQuery = `DELETE FROM borrowals WHERE book_isbn = '${isbn}';`
                     client.query(cancelQuery)
@@ -237,13 +237,37 @@ function borrowBook(req, res) {
 
 function getBorrowedBooks(req, res) {
     if (req.session.user) {
-        let bookDataQuery = `SELECT books.title, books.image, borrowals.date_borrowing, borrowals.return_date FROM books, borrowals WHERE books.isbn = borrowals.book_isbn AND borrowals.user_id = ${req.session.user.id};`
+        let bookDataQuery = `SELECT books.isbn, books.title, books.image, borrowals.date_borrowing, borrowals.return_date FROM books, borrowals WHERE books.isbn = borrowals.book_isbn AND borrowals.user_id = ${req.session.user.id};`
         client.query(bookDataQuery)
-        .then( results => {
-            res.json({books: results.rows})
-        })
-        .catch( e => console.log(e.message))
+            .then(results => {
+                res.json({ books: results.rows })
+            })
+            .catch(e => console.log(e.message))
     }
+}
+
+function returnBook(req, res) {
+    if (!req.session.user) {
+        res.status(403).end()
+        return
+    }
+    let { isbn } = req.body
+    let query = `DELETE FROM borrowals WHERE book_isbn = '${isbn}' AND user_id = ${req.session.user.id};`
+    let updateQuery = `UPDATE books SET available_copies = (available_copies + 1) WHERE isbn = '${isbn}';`
+    client.query(query)
+        .then(() => {
+            client.query(updateQuery)
+                .then(() => {
+                    res.status(201).send("Book return successful")
+                })
+                .catch(e => {
+                    res.status(500).send("An Error occurred")
+                })
+        })
+        .catch(e => {
+            res.status(500).send("An Error occurred")
+        })
+
 }
 
 module.exports = {
@@ -257,5 +281,6 @@ module.exports = {
     removeBook,
     postRegister,
     getBorrowedBooks,
-    borrowBook
+    borrowBook,
+    returnBook
 }
