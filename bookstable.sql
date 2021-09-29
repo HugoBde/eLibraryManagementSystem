@@ -47,3 +47,16 @@ SIGNAL SQLSTATE '450000' SET MESSAGE_TEXT ='no Books Available';
 END IF;
 
 END$$
+
+SET @book_available = (SELECT COUNT(*)
+    FROM loan l
+    INNER JOIN student s ON l.no = s.no
+    INNER JOIN copy c ON l.code = c.code
+    WHERE c.fk_isbn = book_isbn AND s.embargo = 0 AND l.return_date IS NULL);
+
+IF @book_available
+THEN 
+    INSERT INTO loan (fk_code, fk_no, pk_taken, due, return_date)
+    VALUES (code, stu_no, CURDATE(), CURDATE()+c.duration,'');
+ELSE SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT ='no Books Available';
+END IF
