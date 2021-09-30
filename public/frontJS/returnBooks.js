@@ -18,7 +18,9 @@ xhr.onload = function () {
             let dueBy = document.createElement('td')
             let fines = document.createElement('td')
             let returnBtn = document.createElement('button');
+            let renewBtn = document.createElement('button')
             let returnBtnTd = document.createElement('td');
+            let renewBtnTd = document.createElement('td');
             title.innerHTML = book.title
             let date = new Date(book.date_borrowing)
             dateBorrowed.innerHTML = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
@@ -27,12 +29,16 @@ xhr.onload = function () {
             fines.innerHTML = `N/A`
             returnBtn.innerHTML = "Return"
             returnBtn.classList.add("btn", "btn-danger")
+            renewBtn.innerHTML = "Renew"
+            renewBtn.classList.add("btn", "btn-success")
             console.log(book.isbn);
             returnBtn.isbn = book.isbn;
             returnBtn.onclick = returnBook;
 
             returnBtnTd.appendChild(returnBtn);
+            renewBtnTd.appendChild(renewBtn);
             row.appendChild(returnBtnTd)
+            row.appendChild(renewBtnTd)
             row.appendChild(title)
             row.appendChild(dateBorrowed)
             row.appendChild(dueBy)
