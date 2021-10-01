@@ -34,15 +34,3 @@ body {
 .row {
     margin-left: 0;
 }
-
-#searchExpand{
-    background-image: url(../favicon/search.svg);
-    background-repeat: no-repeat;
-    background-position: 2px 10px;
-    width: 100px;
-    transition: all 0.60s;
-}
-
-#searchExpand:hover{
-    width: 750px;
-}
