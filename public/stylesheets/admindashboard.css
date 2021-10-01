@@ -1,0 +1,48 @@
+.shadow {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.5) !important;
+}
+
+.card {
+    cursor: pointer;
+}
+
+#booksList {
+    text-align: start;
+}
+
+#return {
+    cursor: pointer;
+    font-size: 2em;
+}
+
+.bookListItem {
+    padding: 1em;
+}
+
+.bookListItem a img {
+    max-height: 160px;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: table;
+}
+
+.row {
+    margin-left: 0;
+}
+
+#searchExpand{
+    background-image: url(../favicon/search.svg);
+    background-repeat: no-repeat;
+    background-position: 2px 10px;
+    width: 100px;
+    transition: all 0.60s;
+}
+
+#searchExpand:hover{
+    width: 750px;
+}
