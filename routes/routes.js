@@ -4,10 +4,10 @@ const bcrypt = require("bcrypt")
 
 function User(id, firstName, lastName, email, isAdmin) {
     this.id = id,
-        this.firstName = firstName,
-        this.lastName = lastName,
-        this.email = email,
-        this.isAdmin = isAdmin
+    this.firstName = firstName,
+    this.lastName = lastName,
+    this.email = email,
+    this.isAdmin = isAdmin
 }
 
 let client
@@ -270,6 +270,27 @@ function returnBook(req, res) {
 
 }
 
+function renewBook(req, res) {
+    if (!req.session.user) {
+        res.status(403).end()
+        return
+    }
+    let {isbn, return_date} = req.body
+    let id = req.session.user.id
+    let newDate = new Date(return_date)
+    newDate.setMonth(newDate.getMonth() + 1)
+    newDateStr = `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`
+    let query = `UPDATE borrowals SET return_date = '${newDateStr}' WHERE user_id = ${id} AND book_isbn = '${isbn}';`
+    client.query(query)
+        .then( () => {
+            res.status(200).json(newDate)
+        })
+        .catch( e => {
+            console.log(e)
+            res.status(510).end()
+        })
+}
+
 module.exports = {
     connectToDB,
     logout,
@@ -282,5 +303,6 @@ module.exports = {
     postRegister,
     getBorrowedBooks,
     borrowBook,
-    returnBook
+    returnBook,
+    renewBook
 }

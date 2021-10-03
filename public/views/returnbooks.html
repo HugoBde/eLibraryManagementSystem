@@ -1,49 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
 
     <!-- Bootstrap ICONS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
 
     <!-- Bootstrap JS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
 
     <!-- Favicon -->
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicon/favicon-16x16.png"
-    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
     <link rel="manifest" href="../favicon/site.webmanifest" />
 
     <!-- <script src="/frontJS/dashboard.js"></script> -->
@@ -53,102 +31,104 @@
     <!-- Local CSS File -->
     <link rel="stylesheet" href="../stylesheets/dashboard.css" />
     <title>eLibrary</title>
-  </head>
+</head>
 
-  <body class="container-fluid p-0">
+<body class="container-fluid p-0">
     <!-- NAVBAR MENU -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
-      <div class="container">
-        <a href="./index.html" class="navbar-brand"
-          ><img src="../favicon/favicon.ico"
-        /></a>
+        <div class="container">
+            <a href="./index.html" class="navbar-brand"><img src="../favicon/favicon.ico" /></a>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navmenu"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navmenu">
-          <ul class="navbar-nav ms-auto gap-2">
-            <li class="nav-item">
-              <a href="#">
-                <!-- <button type="button" class="btn btn-outline-secondary">Search<i
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item">
+                        <a href="#">
+                            <!-- <button type="button" class="btn btn-outline-secondary">Search<i
                                     class="bi bi-search ps-2"></i></button> -->
-                <input
-                  type="text"
-                  name=""
-                  placeholder="Search"
-                  class="btn btn-outline-secondary"
-                  id="searchExpand"
-                />
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./index.html"
-                ><button type="button" class="btn btn-outline-secondary">
-                  Home<i class="bi bi-house ps-2"></i></button
-              ></a>
-            </li>
-            <li class="nav-item">
-              <a href="#"
-                ><button type="button" class="btn btn-outline-secondary">
-                  My Account<i class="bi bi-person ps-2"></i></button
-              ></a>
-            </li>
-            <li id="logoutBtn" class="nav-item">
-              <button
-                type="button"
-                onclick="logout()"
-                class="btn btn-outline-danger"
-              >
-                Logout
-              </button>
-            </li>
-          </ul>
+                            <input type="text" name="" placeholder="Search" class="btn btn-outline-secondary"
+                                id="searchExpand" />
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./index.html"><button type="button" class="btn btn-outline-secondary">
+                                Home<i class="bi bi-house ps-2"></i></button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><button type="button" class="btn btn-outline-secondary">
+                                My Account<i class="bi bi-person ps-2"></i></button></a>
+                    </li>
+                    <li id="logoutBtn" class="nav-item">
+                        <button type="button" onclick="logout()" class="btn btn-outline-danger">
+                            Logout
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
     <main style="display: table-row" class="bg-primary text-center h-100">
-      <div class="container" id="returnDisplay">
-        <div class="d-flex justify-content-start">
-          <h2 class="text-white py-5">Return a Book</h2>
+        <div class="container" id="returnDisplay">
+            <div class="d-flex justify-content-start">
+                <h2 class="text-white py-5">Return a Book</h2>
+            </div>
+            <table class="table table-primary table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col"><i class="bi bi-arrow-return-left"></i></th>
+                        <th scope="col"><i class="bi bi-arrow-clockwise"></i></th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Date Borrowed</th>
+                        <th scope="col">Due by</th>
+                        <th scope="col">Fines</th>
+                    </tr>
+                </thead>
+                <tbody class="" id="tableBody"></tbody>
+            </table>
         </div>
-        <table class="table table-primary table-hover">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col"><i class="bi bi-arrow-return-left"></i></th>
-              <th scope="col"><i class="bi bi-arrow-clockwise"></i></th>
-              <th scope="col">Title</th>
-              <th scope="col">Date Borrowed</th>
-              <th scope="col">Due by</th>
-              <th scope="col">Fines</th>
-            </tr>
-          </thead>
-          <tbody class="" id="tableBody"></tbody>
-        </table>
-      </div>
 
-      <!-- WHEN NO BOOKS TO RETURN-->
-      <div id="rBooks" hidden class="container shadow bg-white my-3">
-        <h2 id="noReturnBooks">No books currently to return</h2>
-        <div hidden id="booksList" class="list-group"></div>
-        <hr class="mb-0" />
-        <a href="/dashboard.html"
-          ><i id="return" class="bi bi-arrow-return-left"></i
-        ></a>
-      </div>
+        <!-- WHEN NO BOOKS TO RETURN-->
+        <div id="rBooks" hidden class="container shadow bg-white my-3">
+            <h2 id="noReturnBooks">No books currently to return</h2>
+            <div hidden id="booksList" class="list-group"></div>
+            <hr class="mb-0" />
+            <a href="/dashboard.html"><i id="return" class="bi bi-arrow-return-left"></i></a>
+        </div>
+        <!-- GOOD POP UP -->
+        <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+            <div id="goodToast" class="toast border border-3 border-success align-items-center shadow" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div id="goodToastMessage" class="toast-body text-success"></div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <!-- BAD POP UP -->
+        <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+            <div id="badToast" class="toast border border-3 border-danger align-items-center shadow" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div id="badToastMessage" class="toast-body text-danger">
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
     </main>
     <!-- Footer -->
     <footer class="p-5 bg-dark text-white text-center">
-      <div class="container">
-        <p class="lead">Copyright © 2021 Library Website</p>
-      </div>
+        <div class="container">
+            <p class="lead">Copyright © 2021 Library Website</p>
+        </div>
     </footer>
 
     <!-- <script src="../frontJS/dashboard.js"></script> -->
-  </body>
+</body>
+
 </html>
