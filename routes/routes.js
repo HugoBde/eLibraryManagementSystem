@@ -1,6 +1,6 @@
 const path = require("path")
 const { Client } = require("pg")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 
 function User(id, firstName, lastName, email, isAdmin) {
     this.id = id,
