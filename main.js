@@ -55,6 +55,7 @@ app.post("/register", routes.postRegister)
 app.post("/borrowBook", routes.borrowBook)
 app.post("/returnBook", routes.returnBook)
 app.post("/renewBook", routes.renewBook)
+app.post("/search", routes.search)
 
 
 const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwise

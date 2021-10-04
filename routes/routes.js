@@ -291,6 +291,30 @@ function renewBook(req, res) {
         })
 }
 
+function search(req, res) {
+    let {search, sortBy} = req.body
+    let condition = ""
+    if (search.trim() !== "") {
+        let items = search.split(' ')
+        let regex = "("
+        for (let item of items) {
+            regex += item + "|"
+        }
+        regex = regex.slice(0, -1)
+        regex += ')'
+        condition = `WHERE title ~* '${regex}' OR array_to_string(authors, ' ') ~* '${regex}' OR publisher ~* '${regex}' `
+    }
+    let query = `SELECT * FROM books ${condition} ${sortBy};`
+    client.query(query)
+        .then( results => {
+            res.status(200).json(results.rows)
+        })
+        .catch(e => {
+            console.log(e.message)
+            res.status(510).end()
+        })
+}
+
 module.exports = {
     connectToDB,
     logout,
@@ -304,5 +328,6 @@ module.exports = {
     getBorrowedBooks,
     borrowBook,
     returnBook,
-    renewBook
+    renewBook,
+    search
 }
