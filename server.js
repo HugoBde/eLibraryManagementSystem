@@ -57,11 +57,14 @@ app.post("/returnBook", routes.returnBook)
 app.post("/renewBook", routes.renewBook)
 app.post("/search", routes.search)
 
-
-const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwise
-
-// Initialising DB client
-console.log("Connecting to " + process.env.DB_URI) // changed it to the connection string because it looks cooler hehe
-routes.connectToDB()
+if (require.main === module) { // only launching server if executed rather than imported for tests
+    const PORT = process.env.PORT || 3000 // Use port 3000 unless specified otherwise
+    
+    // Initialising DB client
+    console.log("Connecting to " + process.env.DB_URI) // changed it to the connection string because it looks cooler hehe
+    routes.connectToDB()
     .then(() => app.listen(PORT, () => console.log("Done\nListening on port " + PORT)))
     .catch(e => console.log(e))
+}
+
+module.exports = {app} // exporting app for tests

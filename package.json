@@ -4,7 +4,8 @@
   "description": "Online Library Management System for a University",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node test.js 1> /dev/null",
+    "test-verbose": "node test.js",
     "dev": "nodemon --ignore 'public/frontJS/*' "
   },
   "repository": {
@@ -27,6 +28,7 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "supertest": "^6.1.6"
   }
 }
