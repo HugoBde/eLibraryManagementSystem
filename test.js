@@ -1,4 +1,3 @@
-let request =require("supertest")
 
 const routes = require("./routes/routes")
 const tests = require("./test/unitTests")
@@ -56,12 +55,8 @@ console.error("Initialising test environment...")
 
 const {app} = require("./server")
 
-app.use((req, res, next) => {
-    res.session = req.session
-    next()
-})
 
-request = request('http://localhost:3000')
+
 
 routes.connectToDB().then(() => {
     let server = app.listen(process.env.PORT || 3000)
