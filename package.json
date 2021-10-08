@@ -2,7 +2,7 @@
   "name": "elibrarymanagementsystem",
   "version": "1.0.0",
   "description": "Online Library Management System for a University",
-  "main": "main.js",
+  "main": "server.js",
   "scripts": {
     "test": "node test.js 1> /dev/null",
     "test-verbose": "node test.js",
