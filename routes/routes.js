@@ -315,6 +315,32 @@ function search(req, res) {
         })
 }
 
+function removeUser(req, res) {
+if (req.session.user && !req.session.user.isAdmin) {
+  res.status(403).send("You are not authorised to perform this transaction")
+return
+}
+    
+let {email} = req.body
+let query = `DELETE FROM users WHERE email='${email}';`
+
+client.query(query)
+.then( result => {
+
+if (result.rowCount === 1) {
+
+res.status(201).end()
+
+} else {
+
+res.status(500)
+
+res.send("This user might have already been removed")
+
+}
+
+})
+    
 module.exports = {
     connectToDB,
     logout,
@@ -329,5 +355,6 @@ module.exports = {
     borrowBook,
     returnBook,
     renewBook,
-    search
+    search,
+    removeUser
 }
