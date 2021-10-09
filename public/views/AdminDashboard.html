@@ -1,75 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
 
     <!-- Bootstrap ICONS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-        crossorigin="anonymous"></script>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <link rel="manifest" href="../favicon/site.webmanifest">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="../favicon/site.webmanifest" />
 
-    <script src="/frontJS/dashboard.js"></script>
+    <!-- <script src="/frontJS/dashboard.js"></script> -->
     <script src="/frontJS/logout.js"></script>
     <script src="/frontJS/dashboardMenu.js" defer></script>
     <!-- Local CSS File -->
-    <link rel="stylesheet" href="../stylesheets/admindashboard.css">
+    <link rel="stylesheet" href="../stylesheets/dashboard.css" />
     <title>eLibrary</title>
-</head>
+  </head>
 
-<body class="container-fluid p-0">
-
+  <body class="container-fluid p-0">
     <!-- NAVBAR MENU -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
-        <div class="container">
-            <a href="./index.html" class="navbar-brand"><img src="../favicon/favicon.ico"></a>
+      <div class="container">
+        <a href="./index.html" class="navbar-brand"
+          ><img src="../favicon/favicon.ico"
+        /></a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navmenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navmenu">
-                <ul class="navbar-nav ms-auto gap-2">
-                    <li class="nav-item">
-                        <a href="#">
-                            <!-- <button type="button" class="btn btn-outline-secondary">Search<i
-                                    class="bi bi-search ps-2"></i></button> -->
-                            <input type="text" name="" placeholder="Search" class="btn btn-outline-secondary" id="searchExpand">
-                                </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./index.html"><button type="button" class="btn btn-outline-secondary">Home<i
-                                    class="bi bi-house ps-2"></i></button></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#"><button type="button" class="btn btn-outline-secondary">My Account<i
-                                    class="bi bi-person ps-2"></i></button></a>
-                    </li>
-                    <li id="logoutBtn" class="nav-item">
-                        <button type="button" onclick = "logout()" class="btn btn-outline-danger">Logout</button>
-                    </li>
-                </ul>
-            </div>
+        <div class="collapse navbar-collapse" id="navmenu">
+          <ul class="navbar-nav ms-auto gap-2">
+            <li class="nav-item">
+              <a href="./search.html">
+                <button type="button" class="btn btn-outline-secondary">
+                  Search<i class="bi bi-search ps-2"></i>
+                </button>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="./index.html"
+                ><button type="button" class="btn btn-outline-secondary">
+                  Home<i class="bi bi-house ps-2"></i></button
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a href="#"
+                ><button type="button" class="btn btn-outline-secondary">
+                  My Account<i class="bi bi-person ps-2"></i></button
+              ></a>
+            </li>
+            <li id="logoutBtn" class="nav-item">
+              <button
+                type="button"
+                onclick="logout()"
+                class="btn btn-outline-danger"
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
-    <main style="display:table-row;" class="bg-primary text-center h-100">
-        <div id="menu" class="align-content-center justify-content-center w-100 h-100 row row-cols-2 row-cols-md-3">
+    <main style="display: table-row" class="bg-primary text-center h-100">
+        
+        <div id="menu" 
+             class="
+                    align-content-center justify-content-center w-100 h-100 row row-cols-2 row-cols-md-3">
             <div class="col">
                 <div class="col card shadow border-secondary" onclick="removeBook()">
                     <div class="card-header"><i class="bi bi-journal-x" style="font-size: 4em;"></i></div>
