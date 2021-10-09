@@ -315,7 +315,7 @@ function search(req, res) {
         })
 }
 
-function removeBook(req, res) {
+function removeUser(req, res) {
     if (req.session.user && !req.session.user.isAdmin) {
         res.status(403).send("You are not authorised to perform this transaction")
         return
