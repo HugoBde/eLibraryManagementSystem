@@ -191,48 +191,54 @@ function borrowBook(req, res) {
         return
     }
     let { isbn } = req.body
-    let today = new Date()
-    let day = today.getDate()
-    let month = today.getMonth()
-    let year = today.getFullYear()
-    let todayStr = `${year}-${month + 1}-${day}`
-    month++
-    if (month === 12) {
-        month = 0
-        year++
-    }
-    let returnDateStr = `${year}-${month + 1}-${day}`
+    
     let checkQuery = `SELECT * FROM borrowals WHERE user_id=${req.session.user.id} AND book_isbn = '${isbn}';`
     client.query(checkQuery)
-        .then(results => {
-            if (results.rowCount !== 0) {
-                res.status(403).send("You already have this book borrowed")
-                return
-            }
-        })
-        .catch(err => {
-            console.log(err.message)
-            res.status(510).send("Internal server error, please try again")
-        })
-    let borrowQuery = `INSERT INTO borrowals VALUES (${req.session.user.id}, '${isbn}', '${todayStr}', '${returnDateStr}');`
-    let updateQuery = `UPDATE books SET available_copies = (available_copies - 1) WHERE isbn = '${isbn}';`
-    client.query(borrowQuery)
-        .then(() => {
-            client.query(updateQuery)
-                .then(() => {
-                    res.status(201).send("Book borrowed")
-                })
-                .catch(err => {
-                    console.log(err.message)
-                    let cancelQuery = `DELETE FROM borrowals WHERE book_isbn = '${isbn}';`
-                    client.query(cancelQuery)
-                    res.status(500).send("An error occured while borrowing the book")
-                })
-        })
-        .catch(err => {
-            console.log(err.message)
-            res.status(500).send("An error occured while borrowing the book")
-        })
+    .then( results => {
+        if (results.rowCount !== 0) {
+            throw new Error('You already own this book')
+        } else {
+            let checkBorrowLimitQuery = `SELECT COUNT(user_id) AS number_of_books FROM borrowals GROUP BY user_id HAVING user_id=${req.session.user.id};`
+            return client.query(checkBorrowLimitQuery)
+        }
+    })
+    .then( results => {
+        if (results.rowCount !== 0 && results.rows[0].number_of_books >= 5) {
+            throw new Error("You have reached the limit of books you can borrow")
+        } else {
+            return client.query("BEGIN")    // Begin SQL transaction
+        }
+    })
+    .then( () => {
+        let today = new Date()
+        let todayStr = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+        let returnDate = today
+        returnDate.setMonth(returnDate.getMonth() + 1)
+        let returnDateStr = `${returnDate.getFullYear()}-${returnDate.getMonth() + 1}-${returnDate.getDate()}`
+        let borrowQuery = `INSERT INTO borrowals VALUES (${req.session.user.id}, '${isbn}', '${todayStr}', '${returnDateStr}');`
+        return client.query(borrowQuery)
+    })
+    .then( results => {
+        if (results.rowCount !== 1) {
+            client.query("ROLLBACK")        // Cancel the transaction
+            throw new Error("Internal server error, please try again later")
+        } else {
+            let updateQuery = `UPDATE books SET available_copies = (available_copies - 1) WHERE isbn = '${isbn}';`
+            return client.query(updateQuery)
+        }
+    })
+    .then( results => {
+        if (results.rowCount !== 1) {
+            client.query("ROLLBACK")        // Cancel the transaction
+            throw new Error("Internal server error, please try again later")
+        } else {
+            client.query("COMMIT")          // Commit the transaction
+            res.status(201).send("Book borrowed")
+        }
+    })
+    .catch( err => {
+        res.status(510).send(err.message)
+    })
 }
 
 function getBorrowedBooks(req, res) {

@@ -65,12 +65,19 @@ xhr.send();
 function returnBook() {
     let xhr = new XMLHttpRequest()
     xhr.onload = function () {
-        console.log(this.response)
+        if (this.status === 201) {
+            goodToastMessage.innerHTML = this.response
+            goodToast.show()
+            this.button.parentElement.parentElement.parentElement.removeChild(this.button.parentElement.parentElement)  
+        } else {
+            badToastMessage.innerHTML = this.response
+            badToast.show()
+        }
     }
+    xhr.button = this
     xhr.open("POST", "/returnBook")
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.send(JSON.stringify({ isbn: this.isbn }))
-    location.reload();
 }
 
 function renewBook() {
