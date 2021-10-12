@@ -12,7 +12,10 @@ module.exports = [
     addBookDoubleUp,
     addBookAsNonAdmin,
     getExistingBook, 
-    getNonExistingBook
+    getNonExistingBook,
+    removeExistingBook,
+    removeBookAsNonAdmin,
+    removeNonExistingBook
 ]
 
 
@@ -316,7 +319,7 @@ function dataTreatTest() {
 
 function getExistingBook(client) {
     return new Promise( (resolve, reject) => {
-        let results = new TestResult("Get existing book", "Getting an existing book should return a book object")
+        let results = new TestResult("Get book - Existing book", "Getting an existing book should return a book object")
         let req = new MyRequest()
         req.params = {isbn: "0021383553"}
         req.session = {
@@ -347,7 +350,7 @@ function getExistingBook(client) {
 
 function getNonExistingBook() {
     return new Promise( (resolve, reject) => {
-        let results = new TestResult("Get non-existing book", "Attempting to get a book that is not in the database should return status code 404")
+        let results = new TestResult("Get book - Non-existing book", "Attempting to get a book that is not in the database should return status code 404")
         let req = new MyRequest()
         req.params = {isbn: "XXXXXXXXXXXXX"}
         req.session = {
@@ -363,6 +366,86 @@ function getNonExistingBook() {
             resolve(results)
         }
         routes.getBook(req, res)
+    })
+}
+
+// Test Remove book
+
+function removeExistingBook(client) {
+    return new Promise( (resolve, rejects) => {
+        client.query("INSERT INTO books VALUES ('testISBN', '', '', '', '', '', '{\"\"}', '', '', 0);")
+        .then( () => {
+            let results = new TestResult("Remove book - Existing book", "Attemption to remove an existing book should remove it from the database")
+            let req = new MyRequest({isbn: "testISBN"})
+            req.session = {
+                user: {
+                    isAdmin: true
+                }
+            }
+            let res = new MyResponse()
+            res.onEnd = () => {
+                client.query("SELECT * FROM books WHERE isbn='testISBN';")
+                .then( output => {
+                    client.query("DELETE FROM books WHERE isbn='testISBN'") // we try delete the test book no matter what in case the route failed 
+                    .then( () => {
+                        if (output.rowCount === 0) {
+                        results.success = true
+                    }
+                    resolve(results)
+                    })
+                })
+            }
+            routes.removeBook(req, res)
+        })
+    })
+}
+
+function removeBookAsNonAdmin(client) {
+    return new Promise( (resolve, rejects) => {
+        client.query("INSERT INTO books VALUES ('testISBN2', '', '', '', '', '', '{\"\"}', '', '', 0);")
+        .then( () => {
+            let results = new TestResult("Remove book - Non admin user", "Non admin user should not be able to remove a book")
+            let req = new MyRequest({isbn: "testISBN2"})
+            req.session = {
+                user: {
+                    isAdmin: false  // non admin user
+                }
+            }
+            let res = new MyResponse()
+            res.onEnd = () => {
+                client.query("SELECT * FROM books WHERE isbn='testISBN2';")
+                .then( output => {
+                    client.query("DELETE FROM books WHERE isbn='testISBN2'") // we try delete the test book no matter what in case the route failed 
+                    .then( () => {
+                        if (output.rowCount === 1 && res.statusCode === 403) {
+                        results.success = true
+                    }
+                    resolve(results)
+                    })
+                })
+            }
+            routes.removeBook(req, res)
+        })
+    })
+}
+
+function removeNonExistingBook() {
+    return new Promise( (resolve, reject) => {
+        let results = new TestResult("Remove book - non existing book", "Attempting to remove a non existing book should return status code 500")
+        let req = new MyRequest({isbn: "nonexistingisbn"})
+        req.session = {
+            user: {
+                isAdmin: true
+            }
+        }
+        let res = new MyResponse()
+        res.onEnd = () => {
+            if (res.statusCode === 500) {
+                results.success = true
+            }
+            resolve(results)
+        }
+        routes.removeBook(req, res)
     })
 }
 

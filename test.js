@@ -37,7 +37,7 @@ async function test() {
             }
         })
         .catch(err => {
-            console.error("\033[31m" + mytest + err.message + "\033[m")
+            console.error("\033[31m" + mytest.name + ": " + err + "\033[m")
         })
         testOutcomes.push(res)
 
