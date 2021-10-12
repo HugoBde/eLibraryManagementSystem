@@ -5,8 +5,13 @@ module.exports = [
     isUserAdminInvalid,
     isUserAdminNotLoggedIn,
     loginValid,
+    loginWrongEmail,
     loginWrongPassword,
-    dataTreatTest
+    dataTreatTest,
+    addValidBook,
+    addBookDoubleUp,
+    addBookAsNonAdmin,
+    getExistingBook
 ]
 
 
@@ -176,7 +181,7 @@ function loginWrongEmail() {
 
 function loginWrongPassword() {
     return new Promise( (resolve, reject) => {
-        let results = new TestResult("Login - Invalid", "Logging in with wrong password should fail to login user and return status 400")
+        let results = new TestResult("Login - Wrong password", "Logging in with wrong password should fail to login user and return status 400")
         let req = new MyRequest({email: "hugo.m.bouderlique@student.uts.edu.au", password:"not the right password boy"})
         let res = new MyResponse()
         res.onEnd = () => {
@@ -193,36 +198,105 @@ function loginWrongPassword() {
 
 // Testing postAddBook
 
-function postAddBook() {
+function addValidBook(client) {
     return new Promise( (resolve, reject) => {
         let results = new TestResult("Add book - valid", "Sending a book with appropriate data should return status code 201")
-        let req = new MyRequest({email: "hugo.m.bouderlique@student.uts.edu.au", password:"not the right password boy"})
+        let req = new MyRequest({
+            title: "Test book",
+            author: "Test author",
+            isbn: "XXXXXXXXXX",
+            isbn13: "",
+            date: "",
+            publisher: "",
+            language: "",
+            edition: "",
+            pages: "69",
+            imgURL: ""
+        })
+        req.session = {
+            user: {
+                isAdmin: true
+            }
+        }
         let res = new MyResponse()
         res.onEnd = () => {
-            if (!req.session.user && res.statusCode === 400) {
+            client.query("SELECT * FROM books WHERE isbn='XXXXXXXXXX';")
+                .then( output => {
+                    if (output.rowCount === 1) {
+                        results.success = true
+                    }
+                    resolve(results)
+                })
+                .catch(err => reject(err))
+        }
+        routes.postAddBook(req, res)
+    })    
+}
+
+function addBookDoubleUp() {
+    return new Promise( (resolve, reject) => {
+        let results = new TestResult("Add book - Book double up", "Adding a book that is already in the database should return status 422")
+        let req = new MyRequest({
+            title: "Test book",
+            author: "Test author",
+            isbn: "0021383553",
+            isbn13: "",
+            date: "",
+            publisher: "",
+            language: "",
+            edition: "",
+            pages: "69",
+            imgURL: ""
+        })
+        req.session = {
+            user: {
+                isAdmin: true
+            }
+        }
+        let res = new MyResponse()
+        res.onEnd = () => {
+            if (res.statusCode === 422) {
                 results.success = true
-            } else {
-                results.success = false
             }
             resolve(results)
         }
-        routes.postLogin(req, res)
+        routes.postAddBook(req, res)
     })
+}
 
-
-
-
-
-    const testingClient = new Client({
-        connectionString: process.env.DB_URI,
-        ssl: {
-            rejectUnauthorized: false
+function addBookAsNonAdmin() {
+    return new Promise( (resolve, reject) => {
+        let results = new TestResult("Add book - Non admin user", "Adding a book as a non admin user should return status code 403")
+        let req = new MyRequest({
+            title: "Test book",
+            author: "Test author",
+            isbn: "0021383553",
+            isbn13: "",
+            date: "",
+            publisher: "",
+            language: "",
+            edition: "",
+            pages: "69",
+            imgURL: ""
+        })
+        req.session = {
+            user: {
+                isAdmin: false
+            }
         }
+        let res = new MyResponse()
+        res.onEnd = () => {
+            if (res.statusCode === 403) {
+                results.success = true
+            }
+            resolve(results)
+        }
+        routes.postAddBook(req, res)
     })
-    
 }
 
 // Testing dataTreat
+
 function dataTreatTest() {
     return new Promise ( (resolve, reject) => {
         let results = new TestResult("Data treat", "Single quotes characters should be doubled to prevent SQL parsing issues")
@@ -236,17 +310,19 @@ function dataTreatTest() {
     })
 }
 
+
 class TestResult {
     constructor(name, details) {
         this.name = name
         this.details = details
-        this.success = true
+        this.success = false
     }
 }
 
 class MyRequest {
     constructor(body) {
         this.body = body
+        this.params = {}
         this.session = {}
     }
 }
@@ -254,7 +330,7 @@ class MyRequest {
 class MyResponse {
     constructor() {
         this.status = function(code) {
-            if (this.ended === true) return
+            if (this.ended === true) return this
             this.statusCode = code
             return this
         }
@@ -275,6 +351,9 @@ class MyResponse {
             this.location = location
             this.status(302)
             this.end()
+        }
+        this.json = function(chunk) {
+            this.send(JSON.stringify(chunk))
         }
     }
 }

@@ -2,9 +2,15 @@
 const routes = require("./routes/routes")
 const tests = require("./test/unitTests")
 
+const {Client} = require("pg")
 require("dotenv").config()
 
-
+let testClient = new Client({
+    connectionString: process.env.DB_URI,
+    ssl: {
+        rejectUnauthorized: false
+    }
+})
 
 async function test() {
     console.error("Testing environment initialised\n")
@@ -19,7 +25,7 @@ async function test() {
     let failureReason = []
 
     for (let mytest of tests) {
-        let res = mytest()
+        let res = mytest(testClient)
         res.then(test => {
             console.error((test.success ? "\033[32mpassed" : "\033[31mfailed") + "\033[0m: " + test.name)
             if (test.success) {
@@ -62,7 +68,11 @@ const {app} = require("./server")
 
 
 
-routes.connectToDB().then(() => {
+routes.connectToDB()
+.then(() => {
+    testClient.connect()
+})
+.then(() => {
     let server = app.listen(process.env.PORT || 3000)
     test()
 })
