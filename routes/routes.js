@@ -360,5 +360,6 @@ module.exports = {
     returnBook,
     renewBook,
     search,
-    removeUser
+    removeUser,
+    dataTreat
 }

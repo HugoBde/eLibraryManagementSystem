@@ -6,6 +6,7 @@ module.exports = [
     isUserAdminNotLoggedIn,
     loginValid,
     loginWrongPassword,
+    dataTreatTest
 ]
 
 
@@ -219,6 +220,20 @@ function postAddBook() {
         }
     })
     
+}
+
+// Testing dataTreat
+function dataTreatTest() {
+    return new Promise ( (resolve, reject) => {
+        let results = new TestResult("Data treat", "Single quotes characters should be doubled to prevent SQL parsing issues")
+        let output = routes.dataTreat({
+            "key": "value with ' single quotes"
+        })
+        if (output.key === "value with '' single quotes") {
+            results.success = true
+        }
+        resolve(results)
+    })
 }
 
 class TestResult {
