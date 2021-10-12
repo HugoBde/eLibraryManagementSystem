@@ -11,7 +11,8 @@ module.exports = [
     addValidBook,
     addBookDoubleUp,
     addBookAsNonAdmin,
-    getExistingBook
+    getExistingBook, 
+    getNonExistingBook
 ]
 
 
@@ -224,6 +225,7 @@ function addValidBook(client) {
                 .then( output => {
                     if (output.rowCount === 1) {
                         results.success = true
+                        client.query("DELETE FROM books WHERE isbn='XXXXXXXXXX';")
                     }
                     resolve(results)
                 })
@@ -310,6 +312,59 @@ function dataTreatTest() {
     })
 }
 
+// Testing getBook
+
+function getExistingBook(client) {
+    return new Promise( (resolve, reject) => {
+        let results = new TestResult("Get existing book", "Getting an existing book should return a book object")
+        let req = new MyRequest()
+        req.params = {isbn: "0021383553"}
+        req.session = {
+            user: {
+                isAdmin: true
+            }
+        }
+        let res = new MyResponse()
+        res.onEnd = () => {
+            client.query("SELECT * FROM books WHERE isbn='0021383553';")
+            .then(output => {
+                if (output.rowCount === 1) {
+                    let parsedResponse = JSON.parse(res.body)
+                    for (let [k,v] of Object.entries(parsedResponse.book)) {
+                        if (v !== output.rows[0][k]) {
+                            resolve(results)
+                        }
+                    }
+                    results.success = true
+                }
+                resolve(results)
+            })
+            .catch(err => reject(err))
+        }
+        routes.getBook(req, res)
+    })
+}
+
+function getNonExistingBook() {
+    return new Promise( (resolve, reject) => {
+        let results = new TestResult("Get non-existing book", "Attempting to get a book that is not in the database should return status code 404")
+        let req = new MyRequest()
+        req.params = {isbn: "XXXXXXXXXXXXX"}
+        req.session = {
+            user: {
+                isAdmin: false
+            }
+        }
+        let res = new MyResponse()
+        res.onEnd = () => {
+            if (res.statusCode === 404) {
+                results.success = true
+            }
+            resolve(results)
+        }
+        routes.getBook(req, res)
+    })
+}
 
 class TestResult {
     constructor(name, details) {
