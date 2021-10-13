@@ -1,17 +1,25 @@
 const path = require("path")
 const { Client } = require("pg")
 const bcrypt = require("bcryptjs")
+const nodemailer = require("nodemailer")
 
 function User(id, firstName, lastName, email, isAdmin) {
     this.id = id,
-    this.firstName = firstName,
-    this.lastName = lastName,
-    this.email = email,
-    this.isAdmin = isAdmin
+        this.firstName = firstName,
+        this.lastName = lastName,
+        this.email = email,
+        this.isAdmin = isAdmin
 }
 
 let client
 
+const transporter = nodemailer.createTransport({
+    service: "hotmail",
+    auth: {
+        user: "eLibraryManagementSystem@outlook.com",
+        pass: "NodeMailer@123"
+    }
+})
 
 async function connectToDB() {
     client = new Client({
@@ -173,6 +181,19 @@ function postRegister(req, res) {
     let query = `INSERT INTO users VALUES (${id}, '${email}', '${firstName}', '${lastName}', '${hash}', ${isAdmin});`
     client.query(query)
         .then(results => {
+            let message = {
+                from: "eLibraryManagementSystem@outlook.com",
+                to: email,
+                subject: "eLMS Registration receipt",
+                text: "Thank for registering with Some university in Western Sydney's online library management system"
+            }
+            transporter.sendMail(message, (err, info) => {
+                if (err) {
+                    console.log(err)
+                    return
+                }
+                console.log("Sent " + info.response)
+            })
             res.status(200).end()
         })
         .catch(e => {
@@ -191,54 +212,54 @@ function borrowBook(req, res) {
         return
     }
     let { isbn } = req.body
-    
+
     let checkQuery = `SELECT * FROM borrowals WHERE user_id=${req.session.user.id} AND book_isbn = '${isbn}';`
     client.query(checkQuery)
-    .then( results => {
-        if (results.rowCount !== 0) {
-            throw new Error('You already own this book')
-        } else {
-            let checkBorrowLimitQuery = `SELECT COUNT(user_id) AS number_of_books FROM borrowals GROUP BY user_id HAVING user_id=${req.session.user.id};`
-            return client.query(checkBorrowLimitQuery)
-        }
-    })
-    .then( results => {
-        if (results.rowCount !== 0 && results.rows[0].number_of_books >= 5) {
-            throw new Error("You have reached the limit of books you can borrow")
-        } else {
-            return client.query("BEGIN")    // Begin SQL transaction
-        }
-    })
-    .then( () => {
-        let today = new Date()
-        let todayStr = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
-        let returnDate = today
-        returnDate.setMonth(returnDate.getMonth() + 1)
-        let returnDateStr = `${returnDate.getFullYear()}-${returnDate.getMonth() + 1}-${returnDate.getDate()}`
-        let borrowQuery = `INSERT INTO borrowals VALUES (${req.session.user.id}, '${isbn}', '${todayStr}', '${returnDateStr}', false);`
-        return client.query(borrowQuery)
-    })
-    .then( results => {
-        if (results.rowCount !== 1) {
-            client.query("ROLLBACK")        // Cancel the transaction
-            throw new Error("Internal server error, please try again later")
-        } else {
-            let updateQuery = `UPDATE books SET available_copies = (available_copies - 1) WHERE isbn = '${isbn}';`
-            return client.query(updateQuery)
-        }
-    })
-    .then( results => {
-        if (results.rowCount !== 1) {
-            client.query("ROLLBACK")        // Cancel the transaction
-            throw new Error("Internal server error, please try again later")
-        } else {
-            client.query("COMMIT")          // Commit the transaction
-            res.status(201).send("Book borrowed")
-        }
-    })
-    .catch( err => {
-        res.status(510).send(err.message)
-    })
+        .then(results => {
+            if (results.rowCount !== 0) {
+                throw new Error('You already own this book')
+            } else {
+                let checkBorrowLimitQuery = `SELECT COUNT(user_id) AS number_of_books FROM borrowals GROUP BY user_id HAVING user_id=${req.session.user.id};`
+                return client.query(checkBorrowLimitQuery)
+            }
+        })
+        .then(results => {
+            if (results.rowCount !== 0 && results.rows[0].number_of_books >= 5) {
+                throw new Error("You have reached the limit of books you can borrow")
+            } else {
+                return client.query("BEGIN")    // Begin SQL transaction
+            }
+        })
+        .then(() => {
+            let today = new Date()
+            let todayStr = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+            let returnDate = today
+            returnDate.setMonth(returnDate.getMonth() + 1)
+            let returnDateStr = `${returnDate.getFullYear()}-${returnDate.getMonth() + 1}-${returnDate.getDate()}`
+            let borrowQuery = `INSERT INTO borrowals VALUES (${req.session.user.id}, '${isbn}', '${todayStr}', '${returnDateStr}', false);`
+            return client.query(borrowQuery)
+        })
+        .then(results => {
+            if (results.rowCount !== 1) {
+                client.query("ROLLBACK")        // Cancel the transaction
+                throw new Error("Internal server error, please try again later")
+            } else {
+                let updateQuery = `UPDATE books SET available_copies = (available_copies - 1) WHERE isbn = '${isbn}';`
+                return client.query(updateQuery)
+            }
+        })
+        .then(results => {
+            if (results.rowCount !== 1) {
+                client.query("ROLLBACK")        // Cancel the transaction
+                throw new Error("Internal server error, please try again later")
+            } else {
+                client.query("COMMIT")          // Commit the transaction
+                res.status(201).send("Book borrowed")
+            }
+        })
+        .catch(err => {
+            res.status(510).send(err.message)
+        })
 }
 
 function getBorrowedBooks(req, res) {
@@ -281,24 +302,24 @@ function renewBook(req, res) {
         res.status(403).end()
         return
     }
-    let {isbn, return_date} = req.body
+    let { isbn, return_date } = req.body
     let id = req.session.user.id
     let newDate = new Date(return_date)
     newDate.setMonth(newDate.getMonth() + 1)
     newDateStr = `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`
     let query = `UPDATE borrowals SET return_date = '${newDateStr}', renewed = true WHERE user_id = ${id} AND book_isbn = '${isbn}';`
     client.query(query)
-        .then( () => {
+        .then(() => {
             res.status(200).json(newDate)
         })
-        .catch( e => {
+        .catch(e => {
             console.log(e)
             res.status(510).end()
         })
 }
 
 function search(req, res) {
-    let {search, sortBy} = req.body
+    let { search, sortBy } = req.body
     let condition = ""
     if (search.trim() !== "") {
         let items = search.split(' ')
@@ -312,7 +333,7 @@ function search(req, res) {
     }
     let query = `SELECT * FROM books ${condition} ${sortBy};`
     client.query(query)
-        .then( results => {
+        .then(results => {
             res.status(200).json(results.rows)
         })
         .catch(e => {
@@ -334,7 +355,7 @@ function removeUser(req, res) {
             if (result.rowCount === 1) {
                 res.status(201).end()
             } else {
-                res.status(500)  
+                res.status(500)
                 res.send("This user might have already been removed")
             }
         })
@@ -344,7 +365,7 @@ function removeUser(req, res) {
             res.send(e.message)
         })
 }
-    
+
 module.exports = {
     connectToDB,
     logout,
