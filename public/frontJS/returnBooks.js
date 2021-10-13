@@ -33,7 +33,14 @@ xhr.onload = function () {
             dateBorrowed.innerHTML = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
             date = new Date(book.return_date)
             dueBy.innerHTML = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-            fines.innerHTML = `N/A`
+            let overdueDays = Math.ceil((new Date() - date) / 3600 / 1000 / 24)
+            let fineAmount = "N/A"
+            if (overdueDays > 5) {
+                fineAmount = "$100"
+            } else if (overdueDays > 0) {
+                fineAmount = "$" + (overdueDays * 5)
+            }
+            fines.innerHTML = fineAmount
             returnBtn.innerHTML = "Return"
             returnBtn.classList.add("btn", "btn-danger")
             returnBtn.isbn = book.isbn;
