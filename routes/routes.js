@@ -185,7 +185,7 @@ function postRegister(req, res) {
                 from: "eLibraryManagementSystem@outlook.com",
                 to: email,
                 subject: "eLMS Registration receipt",
-                text: "Thank for registering with Some university in Western Sydney's online library management system"
+                text: "Thank for registering with our online eLMS, please contact us if you have any questions."
             }
             transporter.sendMail(message, (err, info) => {
                 if (err) {
