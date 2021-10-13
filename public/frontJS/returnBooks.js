@@ -48,6 +48,17 @@ xhr.onload = function () {
             returnBtnTd.appendChild(returnBtn);
 
             renewBtn.innerHTML = "Renew"
+            if (book.renewed) {
+                renewBtn.disabled = true
+                renewBtn.title = "This book has already been renewed"
+                renewBtn.style.pointerEvents = "all"
+                renewBtn.style.cursor = "default"
+            } else if (overdueDays > 0) {
+                renewBtn.disabled = true
+                renewBtn.title = "You cannot renew an overdue book"
+                renewBtn.style.pointerEvents = "all"
+                renewBtn.style.cursor = "default"
+            }
             renewBtn.classList.add("btn", "btn-success")
             renewBtn.isbn = book.isbn
             renewBtn.returnDate = book.return_date
@@ -88,6 +99,7 @@ function returnBook() {
 }
 
 function renewBook() {
+    this.disabled = true
     let td = document.getElementById(`dueDate${this.isbn}`)
     let xhr = new XMLHttpRequest()
     xhr.responseType = 'json'

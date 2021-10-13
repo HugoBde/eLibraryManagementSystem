@@ -215,7 +215,7 @@ function borrowBook(req, res) {
         let returnDate = today
         returnDate.setMonth(returnDate.getMonth() + 1)
         let returnDateStr = `${returnDate.getFullYear()}-${returnDate.getMonth() + 1}-${returnDate.getDate()}`
-        let borrowQuery = `INSERT INTO borrowals VALUES (${req.session.user.id}, '${isbn}', '${todayStr}', '${returnDateStr}');`
+        let borrowQuery = `INSERT INTO borrowals VALUES (${req.session.user.id}, '${isbn}', '${todayStr}', '${returnDateStr}', false);`
         return client.query(borrowQuery)
     })
     .then( results => {
@@ -243,7 +243,7 @@ function borrowBook(req, res) {
 
 function getBorrowedBooks(req, res) {
     if (req.session.user) {
-        let bookDataQuery = `SELECT books.isbn, books.title, books.image, borrowals.date_borrowing, borrowals.return_date FROM books, borrowals WHERE books.isbn = borrowals.book_isbn AND borrowals.user_id = ${req.session.user.id};`
+        let bookDataQuery = `SELECT books.isbn, books.title, books.image, borrowals.date_borrowing, borrowals.return_date , borrowals.renewed FROM books, borrowals WHERE books.isbn = borrowals.book_isbn AND borrowals.user_id = ${req.session.user.id};`
         client.query(bookDataQuery)
             .then(results => {
                 res.json({ books: results.rows })
@@ -286,7 +286,7 @@ function renewBook(req, res) {
     let newDate = new Date(return_date)
     newDate.setMonth(newDate.getMonth() + 1)
     newDateStr = `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}`
-    let query = `UPDATE borrowals SET return_date = '${newDateStr}' WHERE user_id = ${id} AND book_isbn = '${isbn}';`
+    let query = `UPDATE borrowals SET return_date = '${newDateStr}', renewed = true WHERE user_id = ${id} AND book_isbn = '${isbn}';`
     client.query(query)
         .then( () => {
             res.status(200).json(newDate)
