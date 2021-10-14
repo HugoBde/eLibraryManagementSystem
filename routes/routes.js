@@ -366,6 +366,27 @@ function removeUser(req, res) {
         })
 }
 
+function getOutstandingBooks(req, res) {
+    let query = `SELECT books.title, borrowals.return_date, users.id, users.firstname, users.lastname
+    FROM borrowals
+    INNER JOIN books ON books.isbn = borrowals.book_isbn
+    INNER JOIN users ON users.id = borrowals.user_id;`
+    client.query(query)
+    .then( results => {
+        let outstandingBooks = []
+        for(let result of results.rows) {
+            if (new Date() - result.return_date > 0) {
+                outstandingBooks.push(result)
+            } 
+        }
+        res.status(200).json(outstandingBooks)
+    })
+    .catch(e => {
+        console.log(e)
+        res.status(500).send(e.message)
+    })
+}
+
 module.exports = {
     connectToDB,
     logout,
@@ -382,5 +403,6 @@ module.exports = {
     renewBook,
     search,
     removeUser,
+    getOutstandingBooks,
     dataTreat
 }

@@ -47,6 +47,7 @@ app.get("/getBook/:isbn", routes.getBook)
 app.get("/isUserAdmin", routes.isUserAdmin)
 app.get("/logout", routes.logout)
 app.get("/getBorrowedBooks", routes.getBorrowedBooks)
+app.get("/getOutstandingBooks", routes.getOutstandingBooks)
 
 app.post("/addBook", routes.postAddBook)
 app.post("/removeBook", routes.removeBook)
