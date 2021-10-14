@@ -6,6 +6,10 @@
     cursor: pointer;
 }
 
+#fines {
+    display: flex;
+}
+
 #booksList {
     text-align: start;
 }
