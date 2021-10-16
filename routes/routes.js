@@ -90,26 +90,12 @@ function postAddBook(req, res) {
         res.status(403).end()
         return
     }
-    let { title, author, isbn, isbn13, date, publisher, language, edition, pages, imgURL } = dataTreat(req.body)
+    let { title, author, isbn, publisher} = dataTreat(req.body)
 
-    // Ensure given URL is valid, if not, add no URL to DB
-    let urlRegex = /^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/
-    if (!urlRegex.test(imgURL)) {
-        imgURL = ""
-    }
-
-    let parse = Number.parseInt(pages)
-    let pageInt
-    if (Number.isNaN(parse)) {
-        pageInt = 0
-    } else {
-        pageInt = parse
-    }
-
-    let query = `INSERT INTO books VALUES ('${isbn}', '${isbn13}', '${title}', '${imgURL}', '${date}', '${publisher}', '{"${author}"}', '${language}', '${edition}', ${pageInt});`
+    let query = `INSERT INTO book_requests VALUES ('${isbn}', '${title}', '${publisher}', '{"${author}"}');`
     client.query(query)
         .then(result => {
-            console.log(`${title} added to the database`)
+            console.log(`Request added for "${title}"`)
             res.status(201)
         })
         .catch(e => {

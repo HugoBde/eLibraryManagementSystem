@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100vh;">
 
-<head>
+<head >
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,7 +28,7 @@
     <title>Add A Book</title>
 </head>
 
-<body class="bg-dark text-white">
+<body class="bg-primary text-white d-flex flex-column" style="height: 100%;">
 
     <!-- NAVBAR MENU -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
@@ -58,9 +58,13 @@
         </div>
     </nav>
 
-    <main class="container-fluid bg-primary">
+    <main class="container-fluid bg-primary my-auto">
 
-        <form id="bookForm" class="p-3 container">
+        <form id="bookForm" class="p-3 container bg-dark">
+            <div style="font-size: 2em; text-align: center;">
+                Book request form
+            </div>
+            <hr/>
             <div class="mb-3">
                 <label for="title" class="form-label">Book title</label>
                 <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
@@ -74,41 +78,18 @@
                 <input type="text" class="form-control" id="isbn" name="isbn">
             </div>
             <div class="mb-3">
-                <label for="isbn13" class="form-label">ISBN13</label>
-                <input type="text" class="form-control" id="isbn13" name="isbn13">
-            </div>
-            <div class="mb-3">
-                <label for="date" class="form-label">Date</label>
-                <input type="text" class="form-control" id="date" name="date">
-            </div>
-            <div class="mb-3">
                 <label for="publisher" class="form-label">Publisher</label>
                 <input type="text" class="form-control" id="publisher" name="publisher">
             </div>
-            <div class="mb-3">
-                <label for="language" class="form-label">Language</label>
-                <input type="text" class="form-control" id="language" name="language">
-            </div>
-            <div class="mb-3">
-                <label for="edition" class="form-label">Edition</label>
-                <input type="text" class="form-control" id="ediiton" name="edition">
-            </div>
-            <div class="mb-3">
-                <label for="pages" class="form-label">Pages</label>
-                <input type="text" class="form-control" id="pages" name="pages">
-            </div>
-            <div class="mb-3">
-                <label for="imgURL" class="form-label">Image URL</label>
-                <input type="text" class="form-control" id="imgURL" name="imgURL">
-            </div>
             <button type="submit" class="btn btn-outline-light">Submit</button>
+
         </form>
         <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
             <div id="goodToast" class="toast border border-3 border-success align-items-center shadow" role="alert"
                 aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body text-success">
-                        Book added to DB
+                        Book Request added to DB
                     </div>
                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
                         aria-label="Close"></button>
