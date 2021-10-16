@@ -68,7 +68,11 @@ function postLogin(req, res) {
                     let user = new User(id, firstname, lastname, email, isadmin)
                     console.log("Log in: " + id)
                     req.session.user = user
-                    res.redirect("/dashboard.html")
+                    if (user.isAdmin) {
+                        res.send("/AdminDashboard.html")
+                    } else {
+                        res.send("/dashboard.html")
+                    }
                 } else {
                     console.log("User entered the wrong password!")
                     res.status(400).end()               // look up the right error code
