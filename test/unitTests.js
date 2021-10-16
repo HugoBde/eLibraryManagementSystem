@@ -209,13 +209,7 @@ function addValidBook(client) {
             title: "Test book",
             author: "Test author",
             isbn: "XXXXXXXXXX",
-            isbn13: "",
-            date: "",
             publisher: "",
-            language: "",
-            edition: "",
-            pages: "69",
-            imgURL: ""
         })
         req.session = {
             user: {
@@ -224,7 +218,7 @@ function addValidBook(client) {
         }
         let res = new MyResponse()
         res.onEnd = () => {
-            client.query("SELECT * FROM books WHERE isbn='XXXXXXXXXX';")
+            client.query("SELECT * FROM book_requests WHERE isbn='XXXXXXXXXX';")
                 .then( output => {
                     if (output.rowCount === 1) {
                         results.success = true
@@ -245,13 +239,7 @@ function addBookDoubleUp() {
             title: "Test book",
             author: "Test author",
             isbn: "0021383553",
-            isbn13: "",
-            date: "",
             publisher: "",
-            language: "",
-            edition: "",
-            pages: "69",
-            imgURL: ""
         })
         req.session = {
             user: {
