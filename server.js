@@ -48,6 +48,7 @@ app.get("/isUserAdmin", routes.isUserAdmin)
 app.get("/logout", routes.logout)
 app.get("/getBorrowedBooks", routes.getBorrowedBooks)
 app.get("/getOutstandingBooks", routes.getOutstandingBooks)
+app.get("/allBooks", routes.getAllBooks)
 
 app.post("/addBook", routes.postAddBook)
 app.post("/removeBook", routes.removeBook)

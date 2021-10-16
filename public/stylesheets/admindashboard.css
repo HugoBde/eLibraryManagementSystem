@@ -15,8 +15,20 @@
     font-size: 2em;
 }
 
+#removeBooks {
+    display: flex;
+}
+
 #outstandingBooks {
     display: flex;
+}
+
+td {
+    margin: 0.5em;
+}
+
+tr:hover{
+    background-color: #aaaaaa;
 }
 
 .bookListItem {
@@ -37,4 +49,29 @@ body {
 
 .row {
     margin-left: 0;
+}
+
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}
+.spin::before {
+    position: absolute;
+    display: inline-block;
+    animation: 1s cubic-bezier(.68,-0.55,.27,1.55) infinite spinner;
+    animation-play-state: inherit;
+    border: solid 5px rgba(184, 165, 165, 0.250);
+    border-bottom-color: #0D6EFD;
+    border-radius: 50%;
+    content: "";
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    will-change: transform;
 }

@@ -152,22 +152,32 @@ function removeBook(req, res) {
         return
     }
     let { isbn } = req.body
-    let query = `DELETE FROM books WHERE isbn='${isbn}';`
-
-    client.query(query)
-        .then(result => {
-            if (result.rowCount === 1) {
-                res.status(201).end()
+    let checkQuery = `SELECT available_copies, nb_copies FROM books WHERE isbn='${isbn}';`
+    client.query(checkQuery)
+    .then(results => {
+        if (results.rowCount !== 0) {
+            if (results.rows[0].available_copies !== results.rows[0].nb_copies) {
+                res.status(403)
+                throw new Error("This book is currently borrowed by one or more users and cannot be removed")
             } else {
-                res.status(500)  // look up the right satus code for that
-                res.send("This book might have already been removed")
+                let query = `DELETE FROM books WHERE isbn='${isbn}';`
+                return client.query(query)
             }
-        })
-        .catch(e => {
-            console.log(e)
+        } else {
             res.status(500)
-            res.send(e.message)
-        })
+            throw new Error("This book does not exist in the database: it might have already been removed")
+        }
+    })
+    .then( result => {
+        if (result.rowCount === 1) {
+            res.status(201).end()
+        } else {
+            res.status(500).send("An error has occured please try again later")
+        }
+    })
+    .catch( err => {
+        res.send(err.message)
+    })
 }
 
 function postRegister(req, res) {
@@ -387,6 +397,16 @@ function getOutstandingBooks(req, res) {
     })
 }
 
+function getAllBooks(req ,res) {
+    client.query("SELECT title, isbn FROM books")
+    .then( results => {
+        res.json(results.rows)
+    })
+    .catch(err => {
+        res.status(500).send(err.message)
+    })
+}
+
 module.exports = {
     connectToDB,
     logout,
@@ -404,5 +424,6 @@ module.exports = {
     search,
     removeUser,
     getOutstandingBooks,
+    getAllBooks,
     dataTreat
 }

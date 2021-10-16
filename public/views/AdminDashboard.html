@@ -98,7 +98,7 @@
             class="
                     align-content-center justify-content-center w-100 h-100 row row-cols-2 row-cols-md-3">
             <div class="col">
-                <div class="col card shadow border-secondary" onclick="removeBook()">
+                <div class="col card shadow border-secondary" onclick="viewRemoveBooks()">
                     <div class="card-header"><i class="bi bi-journal-x" style="font-size: 4em;"></i></div>
                     <div class="card-body ">
                         <h5 class="card-title">Remove books</h5>
@@ -106,17 +106,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="col card shadow border-secondary ">
-                    <div class="card-header"><i class="bi bi-person-x-fill" style="font-size: 4em;"></i></div>
-                    <div class="card-body ">
-                        <h5 class="card-title">Remove Users</h5>
-                        <a href="#" class="stretched-link"></a>
-                        <p class="card-text text-truncate text-secondary">Click here to remove any old users</p>
-                    </div>
-                </div>
 
-            </div>
             <div class="col">
                 <div class="col card shadow border-secondary ">
                     <div class="card-header"><i class="bi bi-journal-plus" style="font-size: 4em;"></i></div>
@@ -129,15 +119,6 @@
 
             </div>
             <div class="col">
-                <div class="col card shadow border-secondary">
-                    <div class="card-header"><i class="bi bi-currency-exchange" style="font-size: 4em;"></i></div>
-                    <div class="card-body ">
-                        <h5 class="card-title">Change Fines and Late fees</h5>
-                        <p class="card-text text-secondary text-truncate"> Set the fee rate for each book</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
                 <div class="col card shadow border-secondary" onclick="viewOutstandingBooks()">
                     <div class="card-header"><i class="bi bi-archive" style="font-size: 4em;"></i></div>
                     <div class="card-body ">
@@ -147,6 +128,65 @@
                 </div>
             </div>
 
+        </div>
+
+        <!-- Remove books -->
+        <div id="removeBooks" hidden class="align-content-center h-100 my-3">
+            <div class="container shadow bg-white my-auto p-3" >
+                <div>
+                    <i id="return" onclick="viewMenu()" class="bi bi-x-lg"></i>
+                </div>
+                <hr class="mb-0" />
+                <div id="loadingWheel" hidden class="spin" style="position: relative;height: 100px;"></div>
+                <table style="text-align: left;">
+                    <tbody id="bookList">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id = "modalRemoveButton" type="button" class="btn btn-danger">Remove</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Good Toast-->
+        <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+            <div id="goodToast" class="toast border border-3 border-success align-items-center shadow" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div id="goodToastMessage" class="toast-body text-success"></div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bad toast -->
+        <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+            <div id="badToast" class="toast border border-3 border-danger align-items-center shadow" role="alert" aria-live="assertive"
+                aria-atomic="true">
+                <div class="d-flex">
+                    <div id="badToastMessage" class="toast-body text-danger">
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
         </div>
 
         <!-- Outstanding books -->
