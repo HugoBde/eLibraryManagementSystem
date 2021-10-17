@@ -91,18 +91,24 @@ function postAddBook(req, res) {
         return
     }
     let { title, author, isbn, publisher} = dataTreat(req.body)
-
-    let query = `INSERT INTO book_requests VALUES ('${isbn}', '${title}', '${publisher}', '${author}');`
-    client.query(query)
-        .then(result => {
-            console.log(`Request added for "${title}"`)
-            res.status(201)
-        })
-        .catch(e => {
-            console.log(e.message)
-            res.status(422).send(e.message)
-        })
-        .finally(() => res.end())
+    let checkQuery = `SELECT isbn FROM books WHERE isbn='${isbn}';`
+    client.query(checkQuery)
+    .then(result => {
+        if (result.rowCount !== 0) {
+            throw new Error("This book is already in the library")
+        } else {
+            let query = `INSERT INTO book_requests VALUES ('${isbn}', '${title}', '${publisher}', '${author}');`
+            return client.query(query)
+        }
+    })
+    .then(result => {
+        console.log(`Request added for "${title}"`)
+        res.status(201).end()
+    })
+    .catch(e => {
+        console.log(e.message)
+        res.status(422).send(e.message)
+    })
 }
 
 // Might move this function elsewhere later since it isnt a route itself but a helper function to treat SQL queries content

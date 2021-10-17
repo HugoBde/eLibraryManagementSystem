@@ -222,7 +222,7 @@ function addValidBook(client) {
                 .then( output => {
                     if (output.rowCount === 1) {
                         results.success = true
-                        client.query("DELETE FROM books WHERE isbn='XXXXXXXXXX';")
+                        client.query("DELETE FROM book_requests WHERE isbn='XXXXXXXXXX';")
                     }
                     resolve(results)
                 })
@@ -232,7 +232,7 @@ function addValidBook(client) {
     })    
 }
 
-function addBookDoubleUp() {
+function addBookDoubleUp(client) {
     return new Promise( (resolve, reject) => {
         let results = new TestResult("Add book - Book double up", "Adding a book that is already in the database should return status 422")
         let req = new MyRequest({
@@ -250,6 +250,8 @@ function addBookDoubleUp() {
         res.onEnd = () => {
             if (res.statusCode === 422) {
                 results.success = true
+            } else {
+                client.query("DELETE FROM book_requests WHERE isbn='0021383553';")
             }
             resolve(results)
         }
