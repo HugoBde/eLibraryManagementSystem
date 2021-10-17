@@ -49,6 +49,8 @@ app.get("/logout", routes.logout)
 app.get("/getBorrowedBooks", routes.getBorrowedBooks)
 app.get("/getOutstandingBooks", routes.getOutstandingBooks)
 app.get("/allBooks", routes.getAllBooks)
+app.get("/allUsers", routes.getAllUsers)
+app.get("/allBookRequests", routes.getAllBooksRequests)
 
 app.post("/addBook", routes.postAddBook)
 app.post("/removeBook", routes.removeBook)

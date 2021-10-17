@@ -92,7 +92,7 @@ function postAddBook(req, res) {
     }
     let { title, author, isbn, publisher} = dataTreat(req.body)
 
-    let query = `INSERT INTO book_requests VALUES ('${isbn}', '${title}', '${publisher}', '{"${author}"}');`
+    let query = `INSERT INTO book_requests VALUES ('${isbn}', '${title}', '${publisher}', '${author}');`
     client.query(query)
         .then(result => {
             console.log(`Request added for "${title}"`)
@@ -388,7 +388,7 @@ function getOutstandingBooks(req, res) {
 }
 
 function getAllBooks(req ,res) {
-    client.query("SELECT title, isbn FROM books")
+    client.query("SELECT * FROM books;")
     .then( results => {
         res.json(results.rows)
     })
@@ -396,6 +396,27 @@ function getAllBooks(req ,res) {
         res.status(500).send(err.message)
     })
 }
+
+function getAllUsers(req, res) {
+    client.query("SELECT id, email, firstname, lastname, isadmin FROM users;")
+    .then( results => {
+        res.json(results.rows)
+    })
+    .catch(err => {
+        res.status(500).send(err.message)
+    })
+}
+
+function getAllBooksRequests(req, res) {
+    client.query("SELECT * FROM book_requests;")
+    .then( results => {
+        res.json(results.rows)
+    })
+    .catch(err => {
+        res.status(500).send(err.message)
+    })
+}
+
 
 module.exports = {
     connectToDB,
@@ -415,5 +436,7 @@ module.exports = {
     removeUser,
     getOutstandingBooks,
     getAllBooks,
+    getAllUsers,
+    getAllBooksRequests,
     dataTreat
 }

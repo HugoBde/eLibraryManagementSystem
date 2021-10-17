@@ -23,6 +23,22 @@
     display: flex;
 }
 
+#booksDatabase {
+    display: flex;
+}
+
+#usersDatabase {
+    display: flex;
+}
+
+#bookRequestsDatabase {
+    display: flex;
+}
+
+thead {
+    background-color: #aaaaaa;
+}
+
 td {
     margin: 0.5em;
 }
