@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-      crossorigin="anonymous"
-    />
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+        crossorigin="anonymous" />
+
+
+    <!-- Bootstrap ICONS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <!-- Favicon -->
     <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicon/apple-touch-icon.png"
-    />
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/favicon/apple-touch-icon.png" />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicon/favicon-32x32.png"
-    />
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/favicon/favicon-32x32.png" />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicon/favicon-16x16.png"
-    />
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/favicon/favicon-16x16.png" />
     <link rel="manifest" href="../favicon/site.webmanifest" />
 
     <!-- Local CSS File -->
@@ -40,113 +41,109 @@
     <script src="../frontJS/logout.js"></script>
 
     <title>eLibrary</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <!-- NAVBAR MENU -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
-      <div class="container">
-        <a href="#" class="navbar-brand"
-          ><img src="../favicon/favicon.ico"
-        /></a>
+        <div class="container">
+            <a href="#" class="navbar-brand"><img src="../favicon/favicon.ico" /></a>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navmenu"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navmenu">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a href="#home" class="nav-link active">Home</a>
-            </li>
-            <li class="nav-item">
-              <a href="#aboutus" class="nav-link">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a href="#contact" class="nav-link">Contact</a>
-            </li>
-            <li hidden id="dashboardBtn" class="nav-item">
-              <a class="nav-link" href="/dashboard.html">Dashboard</a>
-            </li>
-            <li hidden id="logoutBtn" class="nav-item">
-              <button
+            <button
+                class="navbar-toggler"
                 type="button"
-                onclick="logout()"
-                class="btn btn-outline-danger"
-              >
-                Logout
-              </button>
-            </li>
-            <li hidden id="loginBtn" class="nav-item">
-              <!-- <a href="#login" class="nav-link">Login</a> -->
-              <a href="login.html">
-                <button type="button" class="btn btn-outline-secondary">
-                  Login
-                </button>
-              </a>
-            </li>
-          </ul>
+                data-bs-toggle="collapse"
+                data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item">
+                        <a href="/search.html"><button type="button" class="btn btn-outline-secondary">Library<i
+                                    class="bi bi-search ps-2"></i></button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/"><button type="button" class="btn btn-outline-secondary">Home<i
+                                    class="bi bi-house ps-2"></i></button></a>
+                    </li>
+                    <li id="dashboardBtn" class="nav-item">
+                        <a href="/dashboard"><button type="button" class="btn btn-outline-secondary">Dashboard<i
+                                    class="bi bi-person ps-2"></i></button></a>
+                    </li>
+                    <li hidden id="logoutBtn" class="nav-item">
+                        <button
+                            type="button"
+                            onclick="logout()"
+                            class="btn btn-outline-danger">
+                            Logout
+                        </button>
+                    </li>
+                    <li hidden id="loginBtn" class="nav-item">
+                        <!-- <a href="#login" class="nav-link">Login</a> -->
+                        <a href="login.html">
+                            <button type="button" class="btn btn-outline-secondary">
+                                Login
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
 
     <!-- HOME PAGE MIDDLE SECTION -->
     <section class="bg-primary text-light p-5 text-center text-sm-start">
-      <div class="container">
-        <div class="d-sm-flex align-items-center justify-content-between">
-          <div>
-            <h1>WESTERN SYDNEY LIBRARY</h1>
-            <p class="lead my-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-            <p class="lead my-4">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos,
-              tempora.
-            </p>
-            <p class="lead">Lorem ipsum dolor sit amet.</p>
-          </div>
-          <img class="img-fluid" src="../pictures/lib-main.jpg" alt="" />
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <div>
+                    <h1>WESTERN SYDNEY LIBRARY</h1>
+                    <p class="lead my-4">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                    <p class="lead my-4">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos,
+                        tempora.
+                    </p>
+                    <p class="lead">Lorem ipsum dolor sit amet.</p>
+                </div>
+                <img class="img-fluid" src="../pictures/lib-main.jpg" alt="" />
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- Contact Us -->
     <section
-      id="contact"
-      class="bg-light text-dark p-5 text-center text-sm-start"
-    >
-      <div class="container">
-        <div class="d-sm-flex align-items-center justify-content-between">
-          <h2 class="text-center py-4">University Library</h2>
-          <div>
-            <h2 class="text-center">Ask Library</h2>
-            <h2 class="lead text-center">Call us 00 0000 0000</h2>
-            <h2 class="lead text-center">
-              eLibraryManagementSystem@outlook.com
-            </h2>
-          </div>
+        id="contact"
+        class="bg-light text-dark p-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <h2 class="text-center py-4">University Library</h2>
+                <div>
+                    <h2 class="text-center">Ask Library</h2>
+                    <h2 class="lead text-center">Call us 00 0000 0000</h2>
+                    <h2 class="lead text-center">
+                        eLibraryManagementSystem@outlook.com
+                    </h2>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- Footer -->
     <footer class="p-5 bg-dark text-white text-center position-relative">
-      <div class="container">
-        <p class="lead">Copyright &copy; 2021 Library Website</p>
-      </div>
+        <div class="container">
+            <p class="lead">Copyright &copy; 2021 Library Website</p>
+        </div>
     </footer>
 
     <!-- Modal for Login -->
     <!-- REMOVED MODAL FOR LOGIN AS WE MOVED IT INTO A DIFFERENT FILE (LOGIN.HTML) -->
 
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>

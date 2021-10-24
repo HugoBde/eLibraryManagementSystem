@@ -423,6 +423,25 @@ function getAllBooksRequests(req, res) {
     })
 }
 
+function getDashboard(req, res) {
+    if (!req.session.user) {
+        res.redirect("/login.html")
+    } else {
+        if (req.session.user.isAdmin) {
+            res.redirect("/adminDashboard.html")
+        } else {
+            res.redirect("/dashboard.html")
+        }
+    }
+}
+
+function getLogin(req, res) {
+    if (req.session.user) {
+        res.redirect("/dashboard")
+    } else {
+        res.redirect("/login.html")
+    }
+}
 
 module.exports = {
     connectToDB,
@@ -444,5 +463,7 @@ module.exports = {
     getAllBooks,
     getAllUsers,
     getAllBooksRequests,
+    getDashboard,
+    getLogin,
     dataTreat
 }

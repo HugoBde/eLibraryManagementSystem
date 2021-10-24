@@ -47,7 +47,7 @@ form.addEventListener('submit', (event) => {
         if (this.status === 400) {
             badToast.show()
         } else {
-            window.location = this.response
+            window.location = "/dashboard"
         }
     }
     xhr.open("POST", "/login")

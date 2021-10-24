@@ -42,6 +42,8 @@ app.use(express.static(path.join(__dirname, "public/views")))
 //app.get("/", routes.getHome)
 
 //app.get("/addBook", routes.getAddBook)
+app.get("/dashboard", routes.getDashboard)
+app.get("/login", routes.getLogin)
 app.get("/isUserLoggedIn", routes.isUserLoggedIn)
 app.get("/getBook/:isbn", routes.getBook)
 app.get("/isUserAdmin", routes.isUserAdmin)
