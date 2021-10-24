@@ -89,33 +89,38 @@ function viewBookRequestsDatabase() {
         xhr.onload = function() {
             bookRequestsLoadingWheel.hidden = true
             const bookRequestsDatabaseTable = document.getElementById("bookRequestsDatabaseTable")
-            bookRequestsDatabaseTable.parentElement.hidden = false
+            const noBookRequests = document.getElementById("noBookRequests")
             if(this.status === 200) {
                 bookRequests = this.response
-                for (let bookRequest of bookRequests) {
-                    let item = document.createElement("tr")
-
-                    let isbn = document.createElement("td")
-                    isbn.innerHTML = bookRequest.isbn
-
-                    let title = document.createElement("td")
-                    title.innerHTML = bookRequest.title
-
-                    let authors = document.createElement("td")
-                    for (let author of bookRequest.authors) {
-                        authors.innerHTML += author
-                    }
-                    authors.innerHTML = bookRequest.authors
-
+                if (bookRequests.length != 0) {
+                    bookRequestsDatabaseTable.parentElement.hidden = false
+                    for (let bookRequest of bookRequests) {
+                        let item = document.createElement("tr")
+                        
+                        let isbn = document.createElement("td")
+                        isbn.innerHTML = bookRequest.isbn
+                        
+                        let title = document.createElement("td")
+                        title.innerHTML = bookRequest.title
+                        
+                        let authors = document.createElement("td")
+                        for (let author of bookRequest.authors) {
+                            authors.innerHTML += author
+                        }
+                        authors.innerHTML = bookRequest.authors
+                        
                     let publisher = document.createElement("td")
                     publisher.innerHTML = bookRequest.publisher.length == 0 ? "N/A" : bookRequest.publisher
-
+                    
                     item.appendChild(isbn)
                     item.appendChild(title)
                     item.appendChild(authors)
                     item.appendChild(publisher)
-
+                    
                     bookRequestsDatabaseTable.appendChild(item)
+                    }
+                } else {
+                    noBookRequests.hidden = false
                 }
             }
         }
