@@ -1,6 +1,6 @@
 # Introduction
 
-The content of this repository is a university project made by my team. If you are working on a similar project for university, please do inspire yourself, but do not copy anything: you won't learn anything and our code is riddled with bugs anyway.
+The content of this repository is a university project made by my team. If you are working on a similar project for university, please do inspire yourself, but do not copy anything: you won't learn anything and our code is riddled with bugs anyway. You're free to take a look at how we went about trying to build our website but don't plagiarize it's not worth it. That's it from me and my team have a good rest of your day :)
 
 # eLibraryManagementSystem
 
