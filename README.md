@@ -1,3 +1,7 @@
+# Introduction
+
+The content of this repository is a university project made by my team. If you are working on a similar project for university, please do inspire yourself, but do not copy anything: you won't learn anything and our code is riddled with bugs anyway.
+
 # eLibraryManagementSystem
 
 ## Purpose
@@ -16,18 +20,18 @@ Our team has been hired in order to develop an effective Library Management Syst
 
 ### Sprint 2
 
-- [ ] Book borrowing
-- [ ] Book returning
-- [ ] Search option
-- [ ] View Book information
+- [x] Book borrowing
+- [x] Book returning
+- [x] Search option
+- [x] View Book information
 
 ### Sprint 3
 
-- [ ] Tracking database
-- [ ] Confirmation Email
-- [ ] Automatic late return notification
-- [ ] Fine calculation
-- [ ] New book request form
+- [x] Tracking database
+- [x] Confirmation Email
+- [x] Automatic late return notification
+- [x] Fine calculation
+- [x] New book request form
 
 
 ## Contributors
